@@ -1,24 +1,24 @@
-### Hi there 👋
+### Hola a todos 👋
 
-Im a junior developer that's just finishing her studyes in programming at Spain. My learnings at this time are:
--Java and C# intermnediate
--SQL, PostgreSQL, PgAdmin: intermediate.
--Python and Javascript: intermediate.
--Git: initiate.
--Usually using IDES: Netbeans, Visual Studio, Eclipse.
--Other IDES using sometimes: Pycharm and Visual Studio Code.
--Scripting witch batch and shell: initate.
+Soy un desarrollador junior que esta terminando sus estudios de programación en España. Lo aperndido hasta el momento és:
+-Java y C# nivel intermedio.
+-SQL, PostgreSQL, PgAdmin: intermedio.
+-Python y Javascript: intermedio.
+-Git: iniciacion.
+-IDES usados habitualmente: Netbeans, Visual Studio, Eclipse.
+-Otros IDES usados: Pycharm and Visual Studio Code.
+-Scripting con batch y powershell: iniciación.
 
-- 🔭 I’m currently working on: doing better my programming skills
+- 🔭 Estoy trabjando actualmente en: mejorar en mis habilidades como programador.
   
-- 🌱 I’m currently learning: Git, Spring, Testing
+- 🌱 Ahora estoy aprendiendo: Git, Spring, Testing
   
-- 👯 I’m looking to collaborate on: some projects of other junior developers
+- 👯 Quiero colaborar con: otros proyectos de desarrolladores junior.
   
-- 🤔 I’m looking for help with: my issues with things that I don't understand now
+- 🤔 Estoy buscando ayuda con: problemas que me pueda ir encontrando con mi código o que yo no entienda actualmente.
   
-- 💬 Ask me about: questions about learning programming in the Spanish education now.
+- 💬 Preguntame sobre: preguntas sobre como empezar tus estudios en España de programación, o si estas en tu primer año de DAM o DAW, posibles dudas que tengas.
   
-- 📫 How to reach me: in my LinkedIn profile of my profile.
+- 📫 Como puedes contactarme: en mi LinkedIn de mi perfil.
   
-- ⚡ Fun fact: I love snowboarding kitesurfing and e-Mtbs. And I like searching in Google to a lot of variety of themes.
+- ⚡ Cosas sobre mi: Me encanta hacer Snowboard, Kitesurf y montar en Mtb. También me encanta Googlear sobre temas diversos y noticias de atualidad aunque sean cosas no referentes a la informática.

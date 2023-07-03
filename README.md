@@ -9,23 +9,16 @@ Im a junior developer that's just finishing her studyes in programming at Spain.
 -Other IDES using sometimes: Pycharm and Visual Studio Code.
 -Scripting witch batch and shell: initate.
 
-- 🔭 I’m currently working on ...
-- Doing better my programming skills
+- 🔭 I’m currently working on: doing better my programming skills
   
-- 🌱 I’m currently learning ...
-- Git, Spring, Testing
+- 🌱 I’m currently learning: Git, Spring, Testing
   
-- 👯 I’m looking to collaborate on ...
-- Some projects of other junior developers
+- 👯 I’m looking to collaborate on: some projects of other junior developers
   
-- 🤔 I’m looking for help with ...
-- My issues with things that I don't understand now
+- 🤔 I’m looking for help with: my issues with things that I don't understand now
   
-- 💬 Ask me about ...
-- Questions about learning programming in the Spanish education now.
+- 💬 Ask me about: questions about learning programming in the Spanish education now.
   
-- 📫 How to reach me: ...
-- In my LinkedIn profile of my profile.
+- 📫 How to reach me: in my LinkedIn profile of my profile.
   
-- ⚡ Fun fact:
-- I love snowboarding kitesurfing and e-Mtbs. And I like searching in Google to a lot of variety of themes.
+- ⚡ Fun fact: I love snowboarding kitesurfing and e-Mtbs. And I like searching in Google to a lot of variety of themes.

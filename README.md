@@ -1,6 +1,7 @@
 ### Hola a todos 👋
 
-Soy un desarrollador junior que esta terminando sus estudios de programación en España. Lo aprendido hasta el momento és:
+Soy un desarrollador junior que esta terminando sus estudios de programación en España. Lo aprendido hasta el momento és:  
+
 -Java y C# nivel intermedio.  
 -SQL, PostgreSQL, PgAdmin: intermedio.  
 -Python y Javascript: intermedio.  

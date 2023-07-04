@@ -20,7 +20,7 @@ Soy un desarrollador junior que esta terminando sus estudios de programación en
   
 - 🤔 Estoy buscando ayuda con: problemas que me pueda ir encontrando con mi código o que yo no entienda actualmente.
   
-- 💬 Preguntame sobre: preguntas sobre como empezar tus estudios en España de programación, o si estas en tu primer año de DAM o DAW, posibles dudas que tengas.
+- 💬 Preguntame sobre: como empezar tus estudios en España de programación, o si estas en tu primer año de DAM o DAW, posibles dudas que tengas.
   
 - 📫 Como puedes contactarme: en mi [LinkedIn](https://www.linkedin.com/in/antoniocompany/ "Ir a mi perfil") de mi perfil.
   

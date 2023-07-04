@@ -4,7 +4,7 @@ Soy un desarrollador junior que esta terminando sus estudios de programación en
 
 -Java y C# nivel intermedio.  
 -SQL, PostgreSQL, PgAdmin: intermedio.  
--Python y Javascript: intermedio.  
+-Python y Javascript: iniciación-intermedio.  
 -Git: iniciacion.  
 -IDES usados habitualmente: Netbeans, Visual Studio, Eclipse.  
 -Otros IDES usados: Pycharm and Visual Studio Code.  

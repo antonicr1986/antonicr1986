@@ -1,7 +1,11 @@
 ### Hola a todos 👋
 
-Soy un desarrollador junior que esta terminando sus estudios de programación en España. Lo aprendido hasta el momento és:  
+Soy un desarrollador junior que esta trabajando actualmente como Service Desk en oficinas de STADA en España. Lo aprendido hasta el momento és:  
 
+-Active Directory gestión de usuarios y máquinas, permisos.
+-Asistencia tecnica al trabajador con problemas relacionados con el hardware y/o software, por medio de sistema de gestión de tickets.
+-Configuración de programas de gestión farmaceutica para gestion de autopedidos: FARMATIC, FARMANAGER, NIXFARMA, UNYCOP, SIGEFAR...
+-Configuración inicial completa de equipos para trabajadores de la empresa nuevos.
 -Java y C# nivel intermedio.  
 -SQL, PostgreSQL, PgAdmin: intermedio.  
 -Python y Javascript: iniciación-intermedio.  
@@ -12,9 +16,9 @@ Soy un desarrollador junior que esta terminando sus estudios de programación en
 
 ---
 
-- 🔭 Estoy trabjando actualmente en: mejorar en mis habilidades como programador.
+- 🔭 Estoy trabjando actualmente en: STADA como service desk y en mejorar en mis habilidades como programador.
   
-- 🌱 Ahora estoy aprendiendo: Git, Spring, Testing
+- 🌱 Ahora estoy aprendiendo: Git, Spring, Testing, Redes, Usuarios y permisos.
   
 - 👯 Quiero colaborar con: otros proyectos de desarrolladores junior.
   

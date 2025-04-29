@@ -1,6 +1,6 @@
 ### Hola a todos 👋
 
-Soy un desarrollador junior que esta trabajando actualmente como Service Desk en oficinas de STADA en España. Lo aprendido hasta el momento és:  
+Soy un desarrollador junior que esta trabajando actualmente como IT Technician y Service Desk en oficinas de STADA en España. Lo aprendido hasta el momento és:  
 
 -Active Directory gestión de usuarios y máquinas, permisos.
 -Asistencia tecnica al trabajador con problemas relacionados con el hardware y/o software, por medio de sistema de gestión de tickets.

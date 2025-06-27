@@ -16,7 +16,7 @@ Soy un desarrollador junior que esta trabajando actualmente como IT Technician y
 
 ---
 
-- 🔭 Estoy trabjando actualmente en: STADA como service desk y en mejorar en mis habilidades como programador.
+- 🔭 Estoy trabjando actualmente en: STADA como service desk, tecnico IT y en mejorar en mis habilidades como programador.
   
 - 🌱 Ahora estoy aprendiendo: Git, Spring, Testing, Redes, Usuarios y permisos.
   

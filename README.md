@@ -9,7 +9,7 @@ Soy un desarrollador junior que está trabajando actualmente como IT Technician 
 -Java y C# nivel intermedio.  
 -SQL, PostgreSQL, PgAdmin: intermedio.  
 -Python y Javascript: iniciación-intermedio.  
--Git: iniciación.  
+-Git: iniciación-intermedio. 
 -IDES usados habitualmente: Netbeans, Visual Studio, Eclipse.  
 -Otros IDES usados: Pycharm and Visual Studio Code.  
 -Scripting con batch y powershell: iniciación.  

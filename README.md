@@ -16,7 +16,9 @@ Soy un desarrollador junior que está trabajando actualmente como IT Technician 
 
 ---
 
-- 🔭 Estoy trabajando actualmente en: STADA como service desk, técnico IT y en mejorar en mis habilidades como programador.
+- 🔭 Estoy trabajando actualmente en: STADA como service desk, técnico IT.
+
+Por mi cuenta estoy trabajando en mejorar mis habilidades como programador.
   
 - 🌱 Ahora estoy aprendiendo: Git, Spring, Testing, Redes, Usuarios y permisos.
   
@@ -24,7 +26,7 @@ Soy un desarrollador junior que está trabajando actualmente como IT Technician 
   
 - 🤔 Estoy buscando ayuda con: problemas que me pueda ir encontrando con mi código o que yo no entienda actualmente.
   
-- 💬 Preguntame sobre: como empezar tus estudios en España de programación, o si estás en tu primer año de DAM o DAW, posibles dudas que tengas.
+- 💬 Preguntame sobre: como empezar tus estudios en España de programación, o si estás cursando de DAM o DAW, posibles dudas que tengas.
   
 - 📫 Como puedes contactarme: en mi [LinkedIn](https://www.linkedin.com/in/antoniocompany/ "Ir a mi perfil") de mi perfil.
   

@@ -12,6 +12,8 @@ Actualmente trabajo con tecnologías del entorno .NET, bases de datos SQL y desa
 - Git / GitHub
 - HTML, CSS, JavaScript / TypeScript en aprendizaje
 
+---
+
 
 - 🔭 Actualmente trabajo en: SOLPORT como programador junior en .NET (proyecto principal), aplicaciones Android y aplicaciones web.
 

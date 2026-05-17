@@ -6,11 +6,13 @@ Actualmente trabajo con tecnologías del entorno .NET, bases de datos SQL y desa
 
 ## Tecnologías principales
 - C# / VB.NET
+- .NET Framework / .NET 8
 - Windows Forms
 - SQL Server
-- Entity Framework
+- Entity Framework / Entity Framework Core
 - Git / GitHub
 - HTML, CSS, JavaScript / TypeScript en aprendizaje
+- React en aprendizaje
 
 ---
 
@@ -19,7 +21,7 @@ Actualmente trabajo con tecnologías del entorno .NET, bases de datos SQL y desa
 
 - 🚀 Por mi cuenta estoy desarrollando proyectos personales para seguir mejorando en C#, .NET, bases de datos y buenas prácticas de programación.
   
-- 🌱 Ahora estoy aprendiendo: React, testing y redes
+- 🌱 Ahora estoy aprendiendo: ASP.NET Core, Entity Framework Core, React, testing y redes
   
 - 🤔 Me interesa seguir aprendiendo sobre: arquitectura de aplicaciones, testing, buenas prácticas y resolución de problemas reales en proyectos .NET.
   

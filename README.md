@@ -1,33 +1,26 @@
-### Hola a todos 👋
+### Hola, soy Antonio Company 👋
 
-Soy un desarrollador junior que está trabajando actualmente como IT Technician y Service Desk en oficinas de STADA en España. Lo aprendido hasta el momento es:  
+Desarrollador junior .NET con experiencia en aplicaciones de escritorio, SQL Server y mantenimiento de aplicaciones empresariales.
 
--Active Directory gestión de usuarios y máquinas, permisos.
--Asistencia técnica al trabajador con problemas relacionados con el hardware y/o software, por medio de sistema de gestión de tickets.
--Configuración de programas de gestión farmacéutica para gestión de autopedidos: FARMATIC, FARMANAGER, NIXFARMA, UNYCOP, SIGEFAR...
--Configuración inicial completa de equipos para trabajadores de la empresa nuevos.
--Java y C# nivel intermedio.  
--SQL, PostgreSQL, PgAdmin: intermedio.  
--Python y Javascript: iniciación-intermedio.  
--Git: iniciación-intermedio. 
--IDES usados habitualmente: Netbeans, Visual Studio, Eclipse.  
--Otros IDES usados: Pycharm and Visual Studio Code.  
--Scripting con batch y powershell: iniciación.  
+Actualmente trabajo con tecnologías del entorno .NET, bases de datos SQL y desarrollo/mantenimiento de aplicaciones internas.
 
----
+## Tecnologías principales
+- C# / VB.NET
+- Windows Forms
+- SQL Server
+- Entity Framework
+- Git / GitHub
+- HTML, CSS, JavaScript / TypeScript en aprendizaje
 
-- 🔭 Estoy trabajando actualmente en: STADA como service desk, técnico IT.
 
-Por mi cuenta estoy trabajando en mejorar mis habilidades como programador.
+- 🔭 Actualmente trabajo en: SOLPORT como programador junior en .NET (proyecto principal), aplicaciones Android y aplicaciones web.
+
+- 🚀 Por mi cuenta estoy desarrollando proyectos personales para seguir mejorando en C#, .NET, bases de datos y buenas prácticas de programación.
   
-- 🌱 Ahora estoy aprendiendo: Git, Spring, Testing, Redes, Usuarios y permisos.
+- 🌱 Ahora estoy aprendiendo: React, testing y redes
   
-- 👯 Quiero colaborar con: otros proyectos de desarrolladores junior.
+- 🤔 Me interesa seguir aprendiendo sobre: arquitectura de aplicaciones, testing, buenas prácticas y resolución de problemas reales en proyectos .NET.
   
-- 🤔 Estoy buscando ayuda con: problemas que me pueda ir encontrando con mi código o que yo no entienda actualmente.
+- 📫 Puedes contactarme en mi [LinkedIn](https://www.linkedin.com/in/antoniocompany/ "Ir a mi perfil").
   
-- 💬 Preguntame sobre: como empezar tus estudios en España de programación, o si estás cursando de DAM o DAW, posibles dudas que tengas.
-  
-- 📫 Como puedes contactarme: en mi [LinkedIn](https://www.linkedin.com/in/antoniocompany/ "Ir a mi perfil") de mi perfil.
-  
-- ⚡ Cosas sobre mí: Me encanta hacer Snowboard, Kitesurf y montar en Mtb. También me encanta Googlear sobre temas diversos y noticias de actualidad aunque sean cosas no referentes a la informática.
+- ⚡ Sobre mí: me encanta hacer snowboard, kitesurf y MTB. También me gusta investigar sobre tecnología, actualidad y temas diversos.

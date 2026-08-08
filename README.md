@@ -10,10 +10,10 @@ Actualmente trabajo con tecnologías del entorno .NET, bases de datos SQL y desa
 - Windows Forms
 - SQL Server
 - Entity Framework / Entity Framework Core
-- Git / GitHub /GitHub Actions
-- Azure DevOps
+- Git / GitHub /GitHub Actions control de versiones y otros
+- Azure DevOps para control de versiones, documentación y planificación
 - HTML, CSS, JavaScript / TypeScript
-- Node.js + React + TailWind varios proyectos internos en mi empresa actual.
+- Node.js + React + TailWind varios proyectos internos en mi empresa actual
 
 ---
 

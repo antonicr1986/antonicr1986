@@ -1,6 +1,6 @@
 ### Hola, soy Antonio Company 👋
 
-Desarrollador junior .NET con experiencia en aplicaciones de escritorio, SQL Server y mantenimiento de aplicaciones empresariales.
+Desarrollador .NET con experiencia en aplicaciones de escritorio, SQL Server y mantenimiento de aplicaciones empresariales.
 
 Actualmente trabajo con tecnologías del entorno .NET, bases de datos SQL y desarrollo/mantenimiento de aplicaciones internas.
 

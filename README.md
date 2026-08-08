@@ -10,9 +10,10 @@ Actualmente trabajo con tecnologías del entorno .NET, bases de datos SQL y desa
 - Windows Forms
 - SQL Server
 - Entity Framework / Entity Framework Core
-- Git / GitHub
-- HTML, CSS, JavaScript / TypeScript en aprendizaje
-- React en aprendizaje
+- Git / GitHub /GitHub Actions
+- Azure DevOps
+- HTML, CSS, JavaScript / TypeScript
+- Node.js + React + TailWind varios proyectos internos en mi empresa actual.
 
 ---
 
@@ -21,10 +22,10 @@ Actualmente trabajo con tecnologías del entorno .NET, bases de datos SQL y desa
 
 - 🚀 Por mi cuenta estoy desarrollando proyectos personales para seguir mejorando en C#, .NET, bases de datos y buenas prácticas de programación.
   
-- 🌱 Ahora estoy aprendiendo: ASP.NET Core, Entity Framework Core, React, testing y redes
+- 🌱 Ahora estoy aprendiendo: ASP.NET Core, Entity Framework Core, React, Testing, Azure y redes
   
 - 🤔 Me interesa seguir aprendiendo sobre: arquitectura de aplicaciones, testing, buenas prácticas y resolución de problemas reales en proyectos .NET.
   
 - 📫 Puedes contactarme en mi [LinkedIn](https://www.linkedin.com/in/antoniocompany/ "Ir a mi perfil").
   
-- ⚡ Sobre mí: me encanta hacer snowboard, kitesurf y MTB. También me gusta investigar sobre tecnología, actualidad y temas diversos.
+- ⚡ Sobre mí:  Me gusta investigar sobre tecnología, actualidad y temas diversos. Me gusta hacer deporte.

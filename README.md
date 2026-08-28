@@ -14,6 +14,7 @@ Actualmente trabajo con tecnologías del entorno .NET, bases de datos SQL y desa
 - Azure DevOps para control de versiones, documentación y planificación
 - HTML, CSS, JavaScript / TypeScript
 - Node.js + React + TailWind varios proyectos internos en mi empresa actual
+- Java para desarrollo con Android Studio
 
 ---
 
@@ -22,9 +23,9 @@ Actualmente trabajo con tecnologías del entorno .NET, bases de datos SQL y desa
 
 - 🚀 Por mi cuenta estoy desarrollando proyectos personales para seguir mejorando en C#, .NET, bases de datos y buenas prácticas de programación.
   
-- 🌱 Ahora estoy aprendiendo: ASP.NET Core, Entity Framework Core, React, Testing, Azure y redes
+- 🌱 Ahora estoy aprendiendo: Docker, Kubernetes, Jenkins y otras herramientas de DevOps
   
-- 🤔 Me interesa seguir aprendiendo sobre: arquitectura de aplicaciones, testing, buenas prácticas y resolución de problemas reales en proyectos .NET.
+- 🤔 Me interesa seguir aprendiendo sobre: arquitectura de aplicaciones, herramientas DevOps, herramientas IA, testing, buenas prácticas y resolución de problemas reales en proyectos .NET.
   
 - 📫 Puedes contactarme en mi [LinkedIn](https://www.linkedin.com/in/antoniocompany/ "Ir a mi perfil").
   

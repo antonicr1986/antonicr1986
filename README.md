@@ -6,7 +6,8 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 - Git / GitHub — control de versiones
 - GitHub Actions — CI/CD
 - Azure DevOps — Repos, Boards, Pipelines y Documentación (wiki)
-- Docker, Kubernetes, Jenkins (aprendiendo activamente*)
+- Docker, GitHub Actions — aplicado en proyectos personales (ver FinanceTracker)
+- Kubernetes, Jenkins — aprendiendo activamente
 
 
 ## 💻 Desarrollo
@@ -15,6 +16,11 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 - SQL Server
 - HTML, CSS, JavaScript / TypeScript · Node.js, React, Tailwind CSS
 - Java (desarrollo con Android Studio)
+
+## 🚀 Proyectos destacados
+- 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8, dockerizada (API + SQL Server) con pipeline de CI/CD en GitHub Actions
+
+![CI/CD](https://img.shields.io/github/actions/workflow/status/antonicr1986/FinanceTracker/ci.yml?style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)
 
 ---
 

@@ -1,32 +1,25 @@
 ### Hola, soy Antonio Company 👋
 
-Desarrollador .NET con experiencia en aplicaciones de escritorio, SQL Server y mantenimiento de aplicaciones empresariales.
+Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y mantenimiento de aplicaciones empresariales (C#, SQL Server) y ahora mismo estoy construyendo mi perfil en Docker y automatización de pipelines.
 
-Actualmente trabajo con tecnologías del entorno .NET, bases de datos SQL y desarrollo/mantenimiento de aplicaciones internas.
+## 🛠️ DevOps & Infraestructura
+- Git / GitHub — control de versiones
+- GitHub Actions — CI/CD
+- Azure DevOps — Repos, Boards, Pipelines y Documentación (wiki)
+- Docker, Kubernetes, Jenkins (aprendiendo activamente*)
 
-## Tecnologías principales
-- C# / VB.NET
-- .NET Framework / .NET 8
-- Windows Forms
+
+## 💻 Desarrollo
+- C# / VB.NET · .NET Framework / .NET 8
+- Entity Framework / EF Core / Windows Forms
 - SQL Server
-- Entity Framework / Entity Framework Core
-- Git / GitHub /GitHub Actions control de versiones y otros
-- Azure DevOps para control de versiones, documentación y planificación
-- HTML, CSS, JavaScript / TypeScript
-- Node.js + React + TailWind varios proyectos internos en mi empresa actual
-- Java para desarrollo con Android Studio
+- HTML, CSS, JavaScript / TypeScript · Node.js, React, Tailwind CSS
+- Java (desarrollo con Android Studio)
 
 ---
 
-
-- 🔭 Actualmente trabajo en: SOLPORT como programador junior en .NET (proyecto principal), aplicaciones Android y aplicaciones web.
-
-- 🚀 Por mi cuenta estoy desarrollando proyectos personales para seguir mejorando en C#, .NET, bases de datos y buenas prácticas de programación.
-  
-- 🌱 Ahora estoy aprendiendo: Docker, Kubernetes, Jenkins y otras herramientas de DevOps
-  
-- 🤔 Me interesa seguir aprendiendo sobre: arquitectura de aplicaciones, herramientas DevOps, herramientas IA, testing, buenas prácticas y resolución de problemas reales en proyectos .NET.
-  
-- 📫 Puedes contactarme en mi [LinkedIn](https://www.linkedin.com/in/antoniocompany/ "Ir a mi perfil").
-  
-- ⚡ Sobre mí:  Me gusta investigar sobre tecnología, actualidad y temas diversos. Me gusta hacer deporte.
+- 🔭 En SOLPORT: programador .NET, con incursiones en apps Android y web internas.
+- 🌱 Aprendiendo ahora mismo: Docker, Kubernetes y Jenkins, aplicándolo en proyectos personales.
+- 🤔 Me interesa profundizar en: arquitectura de aplicaciones, herramientas IA, testing y buenas prácticas.
+- 📫 Contacto: [LinkedIn](https://www.linkedin.com/in/antoniocompany/ "Ir a mi perfil").
+- ⚡ Fuera del código: sigo la actualidad tecnológica y me gusta hacer deporte.

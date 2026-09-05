@@ -20,24 +20,25 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 - Java (desarrollo con Android Studio)
 
 ## 🚀 Proyectos destacados
+
 - 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8 con arquitectura por capas, autenticación JWT y tests automatizados. Dockerizada (API + SQL Server) y con un pipeline que compila, ejecuta los tests y **publica la imagen en GitHub Container Registry**, etiquetada por commit para poder desplegar o revertir cualquier versión concreta.
 
-[![CI BlocDeNotas](https://img.shields.io/github/actions/workflow/status/antonicr1986/BlocDeNotas/ci.yml?style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/BlocDeNotas/actions)
-[![Release](https://img.shields.io/github/v/release/antonicr1986/BlocDeNotas?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonicr1986/BlocDeNotas/releases/latest)
+[![CI FinanceTracker](https://img.shields.io/github/actions/workflow/status/antonicr1986/FinanceTracker/ci.yml?style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/FinanceTracker/actions)
 
-- 🔗 [BlocDeNotas](https://github.com/antonicr1986/BlocDeNotas)** — Aplicación de escritorio
-en Windows Forms (.NET Framework 4.7.2). Pipeline sobre runner de Windows con MSBuild y
-NuGet, y **publicación automática de Releases** al etiquetar una versión: empaqueta el
-ejecutable, genera el changelog y sella el número de versión en el propio binario.
+- 🔗 [BlocDeNotas](https://github.com/antonicr1986/BlocDeNotas) — Aplicación de escritorio en Windows Forms (.NET Framework 4.7.2). Pipeline sobre runner de Windows con MSBuild y NuGet, y **publicación automática de Releases** al etiquetar una versión: empaqueta el ejecutable, genera el changelog y sella el número de versión en el propio binario.
 
 [![CI BlocDeNotas](https://img.shields.io/github/actions/workflow/status/antonicr1986/BlocDeNotas/ci.yml?style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/BlocDeNotas/actions)
 [![Release](https://img.shields.io/github/v/release/antonicr1986/BlocDeNotas?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonicr1986/BlocDeNotas/releases/latest)
 
+> Dos modelos de entrega continua distintos: uno publica una imagen de contenedor lista para desplegar en un servidor; el otro publica un ejecutable versionado listo para descargar. El pipeline se adapta a lo que hay que entregar.
+> 
 ## 🔒 Seguridad en mis repositorios
 
 Todos mis repositorios públicos tienen escaneo de secretos con **gitleaks**, con una configuración propia que extiende las reglas estándar: las por defecto detectan claves de proveedores conocidos, pero no una contraseña dentro de una cadena de conexión, que es la forma que toma una fuga en un proyecto .NET.
 
 Auditando mi propio historial con esas reglas aparecieron credenciales reales de 2023 y 2024. Están revocadas, y cada una queda registrada en un `.gitleaksignore` con qué era y qué se hizo — porque un pipeline permanentemente en rojo deja de leerse.
+
+El proyecto más reciente, un bot de Telegram, nunca llegó a tener el token en el código: se lee de una variable de entorno desde el primer commit.
 
 ---
 

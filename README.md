@@ -38,6 +38,8 @@ Todos mis repositorios públicos tienen escaneo de secretos con **gitleaks**, co
 
 Auditando mi propio historial con esas reglas aparecieron credenciales reales de 2023 y 2024. Están revocadas, y cada una queda registrada en un `.gitleaksignore` con qué era y qué se hizo — porque un pipeline permanentemente en rojo deja de leerse.
 
+El escaneo en CI detecta, pero no impide: cuando el workflow falla, el commit ya está publicado. Por eso la misma configuración corre también en un hook `pre-commit` local, que bloquea el commit antes de que llegue a existir. Detectar y prevenir son capas distintas, y hacen falta las dos.
+
 El proyecto más reciente, un bot de Telegram, nunca llegó a tener el token en el código: se lee de una variable de entorno desde el primer commit.
 
 ---

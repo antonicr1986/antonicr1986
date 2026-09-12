@@ -1,3 +1,5 @@
+[English](https://github.com/antonicr1986/antonicr1986/blob/main/README.en.md) · **Español**
+
 ### Hola, soy Antonio Company 👋
 
 Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y mantenimiento de aplicaciones empresariales (C#, SQL Server) y ahora mismo estoy construyendo mi perfil en Docker y automatización de pipelines.

@@ -10,6 +10,7 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 - Azure DevOps — Repos, Boards, Pipelines y Documentación (wiki)
 - Docker y registros de imágenes (GHCR) — aplicado en proyectos personales
 - Publicación automatizada de artefactos y Releases versionadas
+- Despliegue controlado desde el pipeline (Vercel) — la publicación depende de que los controles pasen, no del push
 - Seguridad en el pipeline — escaneo de secretos (gitleaks), reglas propias y excepciones documentadas
 - Kubernetes, Jenkins — aprendiendo activamente
 
@@ -23,7 +24,10 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 
 ## 🚀 Proyectos destacados
 
-- 🔗 [financetracker-web](https://github.com/antonicr1986/financetracker-web) - Interfaz web de FinanceTracker en Next.js 16, TypeScript y Tailwind CSS. Desplegada en Vercel con entrega continua: cada push a `main` publica automáticamente.  **[Abrir la aplicacion](https://financetracker-web.vercel.app)**
+- 🔗 [financetracker-web](https://github.com/antonicr1986/financetracker-web) — Interfaz web de FinanceTracker en Next.js 16, TypeScript y Tailwind CSS: dashboard con filtro por mes, gráficos sin librerías externas y tema claro/oscuro. El despliegue lo lanza **el propio pipeline**, y solo después de que el escaneo de secretos y la compilación estén en verde. **[Abrir la aplicación](https://financetracker-web.vercel.app)**
+
+[![CI financetracker-web](https://img.shields.io/github/actions/workflow/status/antonicr1986/financetracker-web/ci.yml?branch=main&style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/financetracker-web/actions)
+[![Demo](https://img.shields.io/badge/demo-online-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://financetracker-web.vercel.app)
 
 - 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8 con arquitectura por capas, autenticación JWT y tests automatizados. Dockerizada (API + SQL Server) y con un pipeline que compila, ejecuta los tests y **publica la imagen en GitHub Container Registry**, etiquetada por commit para poder desplegar o revertir cualquier versión concreta.
 
@@ -34,7 +38,7 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 [![CI BlocDeNotas](https://img.shields.io/github/actions/workflow/status/antonicr1986/BlocDeNotas/ci.yml?style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/BlocDeNotas/actions)
 [![Release](https://img.shields.io/github/v/release/antonicr1986/BlocDeNotas?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonicr1986/BlocDeNotas/releases/latest)
 
-> Dos modelos de entrega continua distintos: uno publica una imagen de contenedor lista para desplegar en un servidor; el otro publica un ejecutable versionado listo para descargar. El pipeline se adapta a lo que hay que entregar.
+> Tres modelos de entrega distintos: uno publica una imagen de contenedor lista para desplegar en un servidor; otro publica un ejecutable versionado listo para descargar; el tercero publica un sitio web, y solo si los controles previos pasan. El pipeline se adapta a lo que hay que entregar.
 > 
 ## 🔒 Seguridad en mis repositorios
 

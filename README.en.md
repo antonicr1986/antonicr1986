@@ -10,6 +10,7 @@
 - Azure DevOps — Repos, Boards, Pipelines and Wiki
 - Docker and container registries (GHCR) — applied in personal projects
 - Automated artifact publishing and versioned Releases
+- Pipeline-gated deployments (Vercel) — shipping depends on the checks passing, not on the push
 - Pipeline security — secret scanning (gitleaks), custom rules and documented exceptions
 - Kubernetes, Jenkins — actively learning
 
@@ -22,7 +23,10 @@
 
 ## 🚀 Featured projects
 
-- 🔗 [financetracker-web](https://github.com/antonicr1986/financetracker-web) — Web interface for FinanceTracker, built with Next.js 16, TypeScript and Tailwind CSS. Deployed on Vercel with continuous delivery: every push to `main` ships automatically. **[Open the live app](https://financetracker-web.vercel.app)**
+- 🔗 [financetracker-web](https://github.com/antonicr1986/financetracker-web) — Web interface for FinanceTracker, built with Next.js 16, TypeScript and Tailwind CSS: a dashboard with a month filter, charts built without external libraries, and a light/dark theme. Deployment is triggered by **the pipeline itself**, and only once secret scanning and the build are green. **[Open the live app](https://financetracker-web.vercel.app)**
+
+[![CI financetracker-web](https://img.shields.io/github/actions/workflow/status/antonicr1986/financetracker-web/ci.yml?branch=main&style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/financetracker-web/actions)
+[![Demo](https://img.shields.io/badge/demo-online-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://financetracker-web-tau.vercel.app)
 
 - 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — REST API in .NET 8 with a layered architecture, JWT authentication and automated tests. Dockerised (API + SQL Server) and backed by a pipeline that builds, runs the tests and **publishes the image to GitHub Container Registry**, tagged by commit so any specific version can be deployed or rolled back.
 
@@ -33,7 +37,7 @@
 [![CI BlocDeNotas](https://img.shields.io/github/actions/workflow/status/antonicr1986/BlocDeNotas/ci.yml?style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/BlocDeNotas/actions)
 [![Release](https://img.shields.io/github/v/release/antonicr1986/BlocDeNotas?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonicr1986/BlocDeNotas/releases/latest)
 
-> Two different continuous delivery models: one publishes a container image ready to deploy on a server, the other publishes a versioned executable ready to download. The pipeline adapts to whatever has to be delivered.
+> Three different delivery models: one publishes a container image ready to deploy on a server; another publishes a versioned executable ready to download; the third publishes a website, and only if the preceding checks pass. The pipeline adapts to whatever has to be delivered.
 
 ## 🔒 Security across my repositories
 

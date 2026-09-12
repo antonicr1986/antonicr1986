@@ -21,6 +21,10 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 
 ## 🚀 Proyectos destacados
 
+- 🔗 [financetracker-web](https://github.com/antonicr1986/financetracker-web) - Interfaz web de FinanceTracker en Next.js 16, TypeScript y Tailwind CSS. Desplegada en Vercel con entrega continua: cada push a `main` publica automaticamente.
+
+**[Abrir la aplicacion](https://financetracker-web.vercel.app)**
+
 - 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8 con arquitectura por capas, autenticación JWT y tests automatizados. Dockerizada (API + SQL Server) y con un pipeline que compila, ejecuta los tests y **publica la imagen en GitHub Container Registry**, etiquetada por commit para poder desplegar o revertir cualquier versión concreta.
 
 [![CI FinanceTracker](https://img.shields.io/github/actions/workflow/status/antonicr1986/FinanceTracker/ci.yml?style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/FinanceTracker/actions)

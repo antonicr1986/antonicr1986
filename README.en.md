@@ -1,4 +1,4 @@
-**English** · [Español](https://github.com/antonicr1986/antonicr1986/blob/main/README.es.md)
+**English** · [Español](https://github.com/antonicr1986/antonicr1986/blob/main/README.md)
 
 ### Hi, I'm Antonio Company 👋
 

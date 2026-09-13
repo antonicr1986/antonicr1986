@@ -23,7 +23,7 @@
 
 ## 🚀 Featured projects
 
-- 🔗 [financetracker-web](https://github.com/antonicr1986/financetracker-web) — Web interface for FinanceTracker, built with Next.js 16, TypeScript and Tailwind CSS: a dashboard with a month filter, charts built without external libraries, and a light/dark theme. Deployment is triggered by **the pipeline itself**, and only once secret scanning and the build are green. **[Open the live app](https://financetracker-web.vercel.app)**
+- 🔗 [financetracker-web](https://github.com/antonicr1986/financetracker-web) — Web interface for FinanceTracker, built with Next.js 16, TypeScript and Tailwind CSS: a dashboard with a month filter, charts built without external libraries, and a light/dark theme. Deployment is triggered by **the pipeline itself**, and only once secret scanning and the build are green. **[Open the live app](https://financetracker-web-tau.vercel.app)**
 
 [![CI financetracker-web](https://img.shields.io/github/actions/workflow/status/antonicr1986/financetracker-web/ci.yml?branch=main&style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/financetracker-web/actions)
 [![Demo](https://img.shields.io/badge/demo-online-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://financetracker-web-tau.vercel.app)

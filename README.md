@@ -20,7 +20,7 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 - Entity Framework / EF Core / Windows Forms
 - SQL Server
 - HTML, CSS, JavaScript / TypeScript · Node.js, React, Tailwind CSS
-- Java (desarrollo con Android Studio)
+- Java/Kotlin (desarrollo con Android Studio)
 
 ## 🚀 Proyectos destacados
 

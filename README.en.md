@@ -19,7 +19,7 @@
 - Entity Framework / EF Core / Windows Forms
 - SQL Server
 - HTML, CSS, JavaScript / TypeScript · Node.js, React, Tailwind CSS
-- Java (Android Studio)
+- Java/Kotlin (Android Studio)
 
 ## 🚀 Featured projects
 

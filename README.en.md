@@ -27,6 +27,28 @@
 
 A complete personal finance system: a REST API and three clients consuming it from different platforms. Writing several consumers is what turns an API into a contract: the same endpoints, the same error codes and the same business rules, reached from another language and another platform. The three clients share a corporate look, light/dark theme, Spanish/English and the same demo account, one click away.
 
+```mermaid
+flowchart LR
+    subgraph Clients
+        WEB[Web · Next.js]
+        AND[Android · Kotlin]
+        DESK[Desktop · WPF]
+    end
+
+    API[REST API · .NET 8]
+    DB[(Azure SQL)]
+
+    WEB --> API
+    AND --> API
+    DESK --> API
+    API --> DB
+
+    API -. CI/CD .-> AZ[GHCR image → Azure App Service]
+    WEB -. CI/CD .-> VER[Vercel]
+    AND -. CI .-> APK[Downloadable APK]
+    DESK -. CI/CD .-> REL[GitHub Release · .exe/.zip]
+```
+
 - 🔗 [financetracker-web](https://github.com/antonicr1986/financetracker-web) — Web interface for FinanceTracker, built with Next.js 16, TypeScript and Tailwind CSS: sign-up and sign-in, transaction entry, filtering by type, category and text, a dashboard with charts built without external libraries, a light/dark theme and a fully bilingual interface (Spanish/English). One click gets you in with the demo account, no sign-up needed. Deployment is triggered by **the pipeline itself**, and only once secret scanning and the build are green. **[Open the live app](https://financetracker-web-tau.vercel.app/login)**
 
 [![CI financetracker-web](https://img.shields.io/github/actions/workflow/status/antonicr1986/financetracker-web/ci.yml?branch=main&style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/financetracker-web/actions)

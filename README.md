@@ -44,7 +44,8 @@ flowchart LR
     DESK --> API
     API --> DB
 
-    API -. CI/CD .-> AZ[Imagen en GHCR → Azure App Service]
+    API -. CI .-> GHCR[Imagen en GHCR · escaneada con Trivy]
+    API -. CD .-> AZ[Azure App Service]
     WEB -. CI/CD .-> VER[Vercel]
     AND -. CI .-> APK[APK descargable]
     DESK -. CI/CD .-> REL[GitHub Release · .exe/.zip]

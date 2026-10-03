@@ -63,6 +63,10 @@ Auditing my own history with those rules surfaced real credentials from 2023 and
 
 Scanning in CI detects, but does not prevent: by the time the workflow fails, the commit is already published. That's why the same configuration also runs in a local `pre-commit` hook, which blocks the commit before it exists. Detecting and preventing are different layers, and both are needed.
 
+Secrets are half the problem; dependencies are the other half. In all four FinanceTracker projects the pipeline checks for known vulnerabilities, transitive ones included, each with its ecosystem's own tool: `dotnet list package --vulnerable` for .NET, `npm audit` for the web app and, since Gradle has no equivalent, on Android the CI submits the dependency graph to GitHub and a dependency review blocks pull requests that introduce a vulnerable one.
+
+To keep them from falling behind, **Dependabot** opens a single monthly pull request with minor and patch updates, for both packages and workflow actions. Major versions are ignored on purpose: they can break the code, and that deserves a decision, not one more PR.
+
 The most recent project, a Telegram bot, never had its token in the code at all: it reads from an environment variable from the very first commit.
 
 ---

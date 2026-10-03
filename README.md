@@ -11,7 +11,7 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 - Docker y registros de imágenes (GHCR) — aplicado en proyectos personales
 - Publicación automatizada de artefactos y Releases versionadas
 - Despliegue controlado desde el pipeline (Vercel) — la publicación depende de que los controles pasen, no del push
-- Seguridad en el pipeline — escaneo de secretos (gitleaks), reglas propias y excepciones documentadas
+- Seguridad en el pipeline — escaneo de secretos (gitleaks), de dependencias y de la imagen Docker (Trivy) antes de publicarla
 - Kubernetes, Jenkins — aprendiendo activamente
 
 
@@ -86,7 +86,7 @@ Auditando mi propio historial con esas reglas aparecieron credenciales reales de
 
 El escaneo en CI detecta, pero no impide: cuando el workflow falla, el commit ya está publicado. Por eso la misma configuración corre también en un hook `pre-commit` local, que bloquea el commit antes de que llegue a existir. Detectar y prevenir son capas distintas, y hacen falta las dos.
 
-Los secretos son la mitad del problema; la otra son las dependencias. En los cuatro proyectos de FinanceTracker el pipeline comprueba vulnerabilidades conocidas, también en dependencias transitivas, cada uno con la herramienta de su ecosistema: `dotnet list package --vulnerable` en .NET, `npm audit` en la web y, como Gradle no trae un equivalente, en Android el CI envía el grafo de dependencias a GitHub y una revisión de dependencias bloquea las pull requests que introducen una vulnerable.
+Los secretos son la mitad del problema; la otra son las dependencias. En los cuatro proyectos de FinanceTracker el pipeline comprueba vulnerabilidades conocidas, también en dependencias transitivas, cada uno con la herramienta de su ecosistema: `dotnet list package --vulnerable` en .NET, `npm audit` en la web y, como Gradle no trae un equivalente, en Android el CI envía el grafo de dependencias a GitHub y una revisión de dependencias bloquea las pull requests que introducen una vulnerable. En la API, además, **Trivy** escanea la imagen Docker antes de publicarla en GHCR: revisa también las librerías del sistema operativo base, que ninguna herramienta de .NET ve. Si encuentra una vulnerabilidad alta o crítica con parche disponible, la imagen no se publica.
 
 Para que no se queden atrás, **Dependabot** abre cada mes una única pull request con las actualizaciones menores y de parche, tanto de los paquetes como de las acciones de los workflows. Las versiones mayores las ignora a propósito: pueden romper el código, y eso merece una decisión, no una PR más.
 

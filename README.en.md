@@ -11,7 +11,7 @@
 - Docker and container registries (GHCR) — applied in personal projects
 - Automated artifact publishing and versioned Releases
 - Pipeline-gated deployments (Vercel) — shipping depends on the checks passing, not on the push
-- Pipeline security — secret scanning (gitleaks), custom rules and documented exceptions
+- Pipeline security — scanning of secrets (gitleaks), dependencies and the Docker image (Trivy) before it is published
 - Kubernetes, Jenkins — actively learning
 
 ## 💻 Development
@@ -85,7 +85,7 @@ Auditing my own history with those rules surfaced real credentials from 2023 and
 
 Scanning in CI detects, but does not prevent: by the time the workflow fails, the commit is already published. That's why the same configuration also runs in a local `pre-commit` hook, which blocks the commit before it exists. Detecting and preventing are different layers, and both are needed.
 
-Secrets are half the problem; dependencies are the other half. In all four FinanceTracker projects the pipeline checks for known vulnerabilities, transitive ones included, each with its ecosystem's own tool: `dotnet list package --vulnerable` for .NET, `npm audit` for the web app and, since Gradle has no equivalent, on Android the CI submits the dependency graph to GitHub and a dependency review blocks pull requests that introduce a vulnerable one.
+Secrets are half the problem; dependencies are the other half. In all four FinanceTracker projects the pipeline checks for known vulnerabilities, transitive ones included, each with its ecosystem's own tool: `dotnet list package --vulnerable` for .NET, `npm audit` for the web app and, since Gradle has no equivalent, on Android the CI submits the dependency graph to GitHub and a dependency review blocks pull requests that introduce a vulnerable one. On the API, **Trivy** also scans the Docker image before it is pushed to GHCR: it covers the base OS libraries too, which no .NET tool sees. If it finds a high or critical vulnerability with a fix available, the image is not published.
 
 To keep them from falling behind, **Dependabot** opens a single monthly pull request with minor and patch updates, for both packages and workflow actions. Major versions are ignored on purpose: they can break the code, and that deserves a decision, not one more PR.
 

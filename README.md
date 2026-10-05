@@ -92,17 +92,28 @@ flowchart LR
 
 ## 🔒 Seguridad en mis repositorios
 
-Todos mis repositorios públicos tienen escaneo de secretos con **gitleaks**, con una configuración propia que extiende las reglas estándar: las por defecto detectan claves de proveedores conocidos, pero no una contraseña dentro de una cadena de conexión, que es la forma que toma una fuga en un proyecto .NET.
+> **Detectar y prevenir son capas distintas, y hacen falta las dos.**
 
-Auditando mi propio historial con esas reglas aparecieron credenciales reales de 2023 y 2024. Están revocadas, y cada una queda registrada en un `.gitleaksignore` con qué era y qué se hizo — porque un pipeline permanentemente en rojo deja de leerse.
+| Capa | Herramienta | Cuándo actúa |
+|---|---|---|
+| 🛑 Prevenir fugas de secretos | **gitleaks** en un hook `pre-commit` | Antes de que el commit exista |
+| 🔍 Detectar fugas de secretos | **gitleaks** en CI | En cada push, en todos mis repos públicos |
+| 📦 Dependencias vulnerables | `dotnet list package --vulnerable` · `npm audit` · grafo de dependencias + *dependency review* | En cada pipeline y pull request |
+| 🐳 Imagen Docker | **Trivy** | Antes de publicar en GHCR |
+| 🔄 Mantenerse al día | **Dependabot** | Una pull request al mes |
 
-El escaneo en CI detecta, pero no impide: cuando el workflow falla, el commit ya está publicado. Por eso la misma configuración corre también en un hook `pre-commit` local, que bloquea el commit antes de que llegue a existir. Detectar y prevenir son capas distintas, y hacen falta las dos.
+### 🔑 Secretos
 
-Los secretos son la mitad del problema; la otra son las dependencias. En los cuatro proyectos de FinanceTracker el pipeline comprueba vulnerabilidades conocidas, también en dependencias transitivas, cada uno con la herramienta de su ecosistema: `dotnet list package --vulnerable` en .NET, `npm audit` en la web y, como Gradle no trae un equivalente, en Android el CI envía el grafo de dependencias a GitHub y una revisión de dependencias bloquea las pull requests que introducen una vulnerable. En la API, además, **Trivy** escanea la imagen Docker antes de publicarla en GHCR: revisa también las librerías del sistema operativo base, que ninguna herramienta de .NET ve. Si encuentra una vulnerabilidad alta o crítica con parche disponible, la imagen no se publica.
+- **Reglas propias.** Extienden las de gitleaks: las de serie detectan claves de proveedores conocidos, pero no una contraseña dentro de una cadena de conexión, que es la forma que toma una fuga en un proyecto .NET.
+- **Historial auditado.** Aparecieron credenciales reales de 2023 y 2024. Están revocadas y cada una queda registrada en `.gitleaksignore` con qué era y qué se hizo, porque un pipeline siempre en rojo deja de leerse.
+- **El CI detecta, el hook previene.** Cuando el workflow falla, el commit ya está publicado; el `pre-commit` local lo bloquea antes de que llegue a existir.
+- **Sin secretos desde el primer commit.** El bot de Telegram nunca tuvo el token en el código: lo lee de una variable de entorno.
 
-Para que no se queden atrás, **Dependabot** abre cada mes una única pull request con las actualizaciones menores y de parche, tanto de los paquetes como de las acciones de los workflows. Las versiones mayores las ignora a propósito: pueden romper el código, y eso merece una decisión, no una PR más.
+### 📦 Dependencias
 
-El proyecto más reciente, un bot de Telegram, nunca llegó a tener el token en el código: se lee de una variable de entorno desde el primer commit.
+- **Cada ecosistema con su herramienta**, también para dependencias transitivas: .NET y npm con las suyas; en Android, como Gradle no trae un equivalente, el CI envía el grafo de dependencias a GitHub y una revisión bloquea las pull requests que introducen una vulnerable.
+- **Trivy en la imagen de la API.** Revisa también las librerías del sistema operativo base, que ninguna herramienta de .NET ve. Con una vulnerabilidad alta o crítica que tenga parche, la imagen no se publica.
+- **Dependabot, sin ruido.** Una única pull request mensual con las actualizaciones menores y de parche, de paquetes y de acciones. Las versiones mayores se ignoran a propósito: pueden romper el código, y eso merece una decisión, no una PR más.
 
 ---
 

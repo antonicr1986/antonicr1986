@@ -91,17 +91,28 @@ flowchart LR
 
 ## 🔒 Security across my repositories
 
-Every public repository of mine runs secret scanning with **gitleaks**, using a custom configuration that extends the default rules: the defaults catch keys from well-known providers, but not a password inside a connection string — which is the shape a leak takes in a .NET project.
+> **Detecting and preventing are different layers, and both are needed.**
 
-Auditing my own history with those rules surfaced real credentials from 2023 and 2024. They are revoked, and each one is recorded in a `.gitleaksignore` along with what it was and what was done about it — because a pipeline that stays permanently red stops being read.
+| Layer | Tool | When it acts |
+|---|---|---|
+| 🛑 Prevent secret leaks | **gitleaks** in a `pre-commit` hook | Before the commit exists |
+| 🔍 Detect secret leaks | **gitleaks** in CI | On every push, in all my public repos |
+| 📦 Vulnerable dependencies | `dotnet list package --vulnerable` · `npm audit` · dependency graph + *dependency review* | On every pipeline and pull request |
+| 🐳 Docker image | **Trivy** | Before pushing to GHCR |
+| 🔄 Staying up to date | **Dependabot** | One pull request a month |
 
-Scanning in CI detects, but does not prevent: by the time the workflow fails, the commit is already published. That's why the same configuration also runs in a local `pre-commit` hook, which blocks the commit before it exists. Detecting and preventing are different layers, and both are needed.
+### 🔑 Secrets
 
-Secrets are half the problem; dependencies are the other half. In all four FinanceTracker projects the pipeline checks for known vulnerabilities, transitive ones included, each with its ecosystem's own tool: `dotnet list package --vulnerable` for .NET, `npm audit` for the web app and, since Gradle has no equivalent, on Android the CI submits the dependency graph to GitHub and a dependency review blocks pull requests that introduce a vulnerable one. On the API, **Trivy** also scans the Docker image before it is pushed to GHCR: it covers the base OS libraries too, which no .NET tool sees. If it finds a high or critical vulnerability with a fix available, the image is not published.
+- **Custom rules.** They extend gitleaks' defaults, which catch keys from well-known providers but not a password inside a connection string — the shape a leak takes in a .NET project.
+- **Audited history.** It surfaced real credentials from 2023 and 2024. They are revoked, and each is recorded in `.gitleaksignore` with what it was and what was done, because a pipeline that stays red stops being read.
+- **CI detects, the hook prevents.** By the time the workflow fails, the commit is already published; the local `pre-commit` hook blocks it before it exists.
+- **No secrets from the first commit.** The Telegram bot never had its token in the code: it reads it from an environment variable.
 
-To keep them from falling behind, **Dependabot** opens a single monthly pull request with minor and patch updates, for both packages and workflow actions. Major versions are ignored on purpose: they can break the code, and that deserves a decision, not one more PR.
+### 📦 Dependencies
 
-The most recent project, a Telegram bot, never had its token in the code at all: it reads from an environment variable from the very first commit.
+- **Each ecosystem with its own tool**, transitive dependencies included: .NET and npm with theirs; on Android, since Gradle has no equivalent, the CI submits the dependency graph to GitHub and a review blocks pull requests that introduce a vulnerable one.
+- **Trivy on the API image.** It also covers the base OS libraries, which no .NET tool sees. With a high or critical vulnerability that has a fix, the image is not published.
+- **Dependabot, without the noise.** A single monthly pull request with minor and patch updates, for packages and workflow actions. Major versions are ignored on purpose: they can break the code, and that deserves a decision, not one more PR.
 
 ---
 

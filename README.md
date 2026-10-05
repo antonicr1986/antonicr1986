@@ -26,6 +26,15 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 
 ### FinanceTracker — una API y tres clientes
 
+**⚡ Pruébalo en 1 minuto**
+
+| 🌐 Web | 📱 Android | 🪟 Windows | 🔌 API |
+|:---:|:---:|:---:|:---:|
+| [Abrir la demo](https://financetracker-web-tau.vercel.app/login) | [Descargar APK](https://github.com/antonicr1986/financetracker-android/releases/latest/download/financetracker.apk) | [Microsoft Store](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=es-es) | [Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger) |
+| En el navegador, sin instalar nada | Android 7.0 o superior | Windows 10/11, un clic | Endpoints documentados |
+
+Entra con el botón de la **cuenta de demostración** o con `demo@financetracker.app` / `Demo1234!`. La API se duerme tras 20 minutos sin uso: la primera carga puede tardar unos segundos.
+
 Un sistema de finanzas personales completo: una API REST y tres clientes que la consumen desde plataformas distintas. Escribir varios consumidores es lo que convierte una API en un contrato: los mismos endpoints, los mismos códigos de error y las mismas reglas de negocio, alcanzados desde otro lenguaje y otra plataforma. Los tres clientes comparten estética corporativa, tema claro/oscuro, español/inglés y la misma cuenta de demostración, a un clic.
 
 ```mermaid

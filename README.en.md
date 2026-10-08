@@ -25,6 +25,9 @@
 
 ### FinanceTracker — one API, three clients
 
+<p align="center"><img src="assets/financetracker-demo.gif" alt="FinanceTracker on web, Windows and Android, in light and dark theme" width="900"></p>
+
+
 **⚡ Try it in one minute**
 
 | 🌐 Web | 📱 Android | 🪟 Windows | 🔌 API |

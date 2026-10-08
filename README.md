@@ -26,6 +26,9 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 
 ### FinanceTracker — una API y tres clientes
 
+<p align="center"><img src="assets/financetracker-demo.gif" alt="FinanceTracker en web, Windows y Android, en tema claro y oscuro" width="900"></p>
+
+
 **⚡ Pruébalo en 1 minuto**
 
 | 🌐 Web | 📱 Android | 🪟 Windows | 🔌 API |

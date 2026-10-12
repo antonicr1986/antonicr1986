@@ -4,6 +4,8 @@
 
 Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y mantenimiento de aplicaciones empresariales (C#, SQL Server) y ahora mismo estoy construyendo mi perfil en Docker, automatización de pipelines e infraestructura como código.
 
+[![CV web](https://img.shields.io/badge/CV_web-antonio--cv-10B981?style=for-the-badge&logo=vercel&logoColor=white)](https://antonio-cv-five.vercel.app) [![LinkedIn](https://img.shields.io/badge/LinkedIn-antoniocompany-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/antoniocompany/)
+
 ## 🛠️ DevOps & Infraestructura
 - Git / GitHub — control de versiones
 - GitHub Actions — CI/CD sobre runners Linux y Windows
@@ -124,5 +126,5 @@ flowchart LR
 - 🔭 En EL TRABAJO: programador .NET, con incursiones en apps Android y web internas.
 - 🌱 Aprendiendo ahora mismo: Docker, Kubernetes y Jenkins, aplicándolo en proyectos personales.
 - 🤔 Me interesa profundizar en: arquitectura de aplicaciones, herramientas IA, testing y buenas prácticas.
-- 📫 Contacto: [LinkedIn](https://www.linkedin.com/in/antoniocompany/ "Ir a mi perfil").
+- 📫 Contacto: [LinkedIn](https://www.linkedin.com/in/antoniocompany/ "Ir a mi perfil") · [CV web](https://antonio-cv-five.vercel.app "Ver mi CV").
 - ⚡ Fuera del código: sigo la actualidad tecnológica y me gusta hacer deporte.

@@ -120,7 +120,7 @@ flowchart LR
 
 ---
 
-- 🔭 At SOLPORT: .NET developer, with some work on Android and internal web apps.
+- 🔭 At WORK: .NET developer, with some work on Android and internal web apps.
 - 🌱 Currently learning: Docker, Kubernetes and Jenkins, applying them in personal projects.
 - 🤔 Interested in going deeper into: application architecture, AI tooling, testing and best practices.
 - 📫 Contact: [LinkedIn](https://www.linkedin.com/in/antoniocompany/ "Go to my profile").

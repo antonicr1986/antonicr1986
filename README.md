@@ -107,6 +107,7 @@ flowchart LR
 | 🧠 Análisis estático del código (SAST) | **CodeQL** | En cada push y pull request |
 | 📦 Dependencias vulnerables | `dotnet list package --vulnerable` · `npm audit` · grafo de dependencias + *dependency review* | En cada pipeline y pull request |
 | 🐳 Imagen Docker | **Trivy** | Antes de publicar en GHCR |
+| 📱 APK de Android | **MobSF** | En cada push y pull request |
 | 🏗️ Infraestructura como código | **Trivy** (`trivy config`) | Antes de desplegar |
 | 🌐 Aplicación en marcha (DAST) | **OWASP ZAP**: activo y autenticado en un entorno desechable · pasivo en producción | Antes de desplegar la API (bloquea) y después de cada despliegue |
 | 🔐 Mínimo privilegio | `GITHUB_TOKEN` de solo lectura · **OIDC** | En todos los workflows |

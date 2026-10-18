@@ -17,7 +17,7 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 - Observabilidad — Azure Monitor / Application Insights con OpenTelemetry, y alertas por email ante errores 5xx y picos de 401/403
 - Terraform — infraestructura de Azure como código: import de recursos existentes, estado remoto en Azure Storage, escaneo de seguridad de la configuración y `plan` automático en cada PR con OIDC
 - Jenkins — pipelines declarativos (Jenkinsfile) con controller y agente Linux en Docker Compose, tests JUnit, artefactos, parámetros y credenciales
-- Kubernetes — aprendiendo activamente
+- Kubernetes y Helm — despliegue de la API en un clúster con un chart propio: réplicas y actualizaciones sin corte, sondas startup/liveness/readiness, SQL Server en StatefulSet con volumen persistente e Ingress con Traefik
 
 
 ## 💻 Desarrollo
@@ -66,6 +66,7 @@ flowchart LR
     WEB -. CI/CD .-> VER[Vercel]
     AND -. CI .-> APK[APK descargable]
     DESK -. CI/CD .-> REL[GitHub Release · .exe/.zip + Microsoft Store]
+    GHCR -. Helm .-> K8S[Kubernetes · chart de Helm]
 ```
 
 - 🔗 [financetracker-web](https://github.com/antonicr1986/financetracker-web) — Interfaz web de FinanceTracker en Next.js 16, TypeScript y Tailwind CSS: registro e inicio de sesión, alta de transacciones, filtros por tipo, categoría y texto, dashboard con gráficos sin librerías externas, tema claro/oscuro e interfaz completa en español e inglés. Se entra en un clic con la cuenta de demostración, sin registrarse. El despliegue lo lanza **el propio pipeline**, y solo después de que el escaneo de secretos y la compilación estén en verde. Tras cada despliegue, **OWASP ZAP** analiza la web publicada (DAST). **[Abrir la aplicación](https://financetracker-web-tau.vercel.app/login)**
@@ -85,7 +86,7 @@ flowchart LR
 [![Release](https://img.shields.io/github/v/release/antonicr1986/financetracker-desktop?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonicr1986/financetracker-desktop/releases/latest)
 [![Microsoft Store](https://img.shields.io/badge/Microsoft_Store-Disponible-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=es-es)
 
-- 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8 con arquitectura por capas, autenticación JWT y tests automatizados. Dockerizada (API + SQL Server) y con un pipeline que compila, ejecuta los tests y **publica la imagen en GitHub Container Registry**, etiquetada por commit para poder desplegar o revertir cualquier versión concreta. En producción, **Azure App Service ejecuta esa misma imagen** —la que ha pasado el escaneo— contra Azure SQL, desplegada desde el propio pipeline sin volver a compilar. Solo se despliega si pasan **todos** los controles —tests, secretos, imagen e infraestructura—, y antes de desplegar **OWASP ZAP** ataca todos sus endpoints en un entorno desechable. La infraestructura de Azure está descrita con **Terraform** y escaneada con **Trivy** antes de cada despliegue: cada pull request muestra un `plan` automático, con acceso a Azure por **OIDC** —sin contraseñas guardadas en GitHub— y una identidad de solo lectura. En producción, **Application Insights** (OpenTelemetry) recoge peticiones, errores y logs, y Azure Monitor avisa por email ante errores 5xx o picos de 401/403. **[Ver la API en Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)** — plan gratuito con SQL serverless, así que la primera petición tras un rato de inactividad tarda unos segundos.
+- 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8 con arquitectura por capas, autenticación JWT y tests automatizados. Dockerizada (API + SQL Server) y con un pipeline que compila, ejecuta los tests y **publica la imagen en GitHub Container Registry**, etiquetada por commit para poder desplegar o revertir cualquier versión concreta. En producción, **Azure App Service ejecuta esa misma imagen** —la que ha pasado el escaneo— contra Azure SQL, desplegada desde el propio pipeline sin volver a compilar. Solo se despliega si pasan **todos** los controles —tests, secretos, imagen e infraestructura—, y antes de desplegar **OWASP ZAP** ataca todos sus endpoints en un entorno desechable. La infraestructura de Azure está descrita con **Terraform** y escaneada con **Trivy** antes de cada despliegue: cada pull request muestra un `plan` automático, con acceso a Azure por **OIDC** —sin contraseñas guardadas en GitHub— y una identidad de solo lectura. En producción, **Application Insights** (OpenTelemetry) recoge peticiones, errores y logs, y Azure Monitor avisa por email ante errores 5xx o picos de 401/403. La misma imagen también se despliega en **Kubernetes** con un **chart de Helm** propio: 2 réplicas con actualizaciones sin corte, sondas de arranque, vida y disponibilidad, un *initContainer* que espera a la base de datos, SQL Server en un StatefulSet con volumen persistente e Ingress con Traefik; el pipeline valida el chart en cada pull request. **[Ver la API en Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)** — plan gratuito con SQL serverless, así que la primera petición tras un rato de inactividad tarda unos segundos.
 
 [![CI FinanceTracker](https://img.shields.io/github/actions/workflow/status/antonicr1986/FinanceTracker/ci.yml?style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/FinanceTracker/actions)
 
@@ -149,7 +150,7 @@ flowchart LR
 ---
 
 - 🔭 En EL TRABAJO: programador .NET, con incursiones en apps Android y web internas.
-- 🌱 Aprendiendo ahora mismo: Kubernetes y Jenkins Configuration as Code, aplicándolo en proyectos personales.
+- 🌱 Aprendiendo ahora mismo: GitOps con Argo CD y Jenkins Configuration as Code, aplicándolo en proyectos personales.
 - 🤔 Me interesa profundizar en: arquitectura de aplicaciones, herramientas IA, testing y buenas prácticas.
 - 📫 Contacto: [LinkedIn](https://www.linkedin.com/in/antoniocompany/ "Ir a mi perfil") · [CV web](https://antonio-cv-five.vercel.app "Ver mi CV").
 - ⚡ Fuera del código: sigo la actualidad tecnológica y me gusta hacer deporte.

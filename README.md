@@ -152,7 +152,7 @@ flowchart LR
 - 🔭 At WORK: .NET developer, with some work on Android and internal web apps.
 - 🌱 Currently learning: GitOps with Argo CD and Jenkins Configuration as Code, applying them in personal projects.
 - 🤔 Interested in going deeper into: application architecture, AI tooling, testing and best practices.
-- 📫 Contact: [LinkedIn](https://www.linkedin.com/in/antoniocompany/?locale=en_US "Go to my profile") · [Interactive CV](https://antonio-cv-five.vercel.app/?lang=en "See my interactive CV").
+- 📫 Contact: [LinkedIn](https://www.linkedin.com/in/antoniocompany/?locale=en-US "Go to my profile") · [Interactive CV](https://antonio-cv-five.vercel.app/?lang=en "See my interactive CV").
 - ⚡ Outside of code: I follow tech news and enjoy sport.
 
 </details>
@@ -312,7 +312,7 @@ flowchart LR
 - 🔭 En EL TRABAJO: programador .NET, con incursiones en apps Android y web internas.
 - 🌱 Aprendiendo ahora mismo: GitOps con Argo CD y Jenkins Configuration as Code, aplicándolo en proyectos personales.
 - 🤔 Me interesa profundizar en: arquitectura de aplicaciones, herramientas IA, testing y buenas prácticas.
-- 📫 Contacto: [LinkedIn](https://www.linkedin.com/in/antoniocompany/?locale=es_ES "Ir a mi perfil") · [CV web](https://antonio-cv-five.vercel.app/?lang=es "Ver mi CV").
+- 📫 Contacto: [LinkedIn](https://www.linkedin.com/in/antoniocompany/?locale=es-ES "Ir a mi perfil") · [CV web](https://antonio-cv-five.vercel.app/?lang=es "Ver mi CV").
 - ⚡ Fuera del código: sigo la actualidad tecnológica y me gusta hacer deporte.
 
 </details>

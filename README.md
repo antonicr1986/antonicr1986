@@ -1,7 +1,5 @@
-<sub>🇬🇧 English below · 🇪🇸 Versión en español más abajo</sub>
-
 <details open>
-<summary><b>🇬🇧 English</b></summary>
+<summary><b>🇬🇧 English</b> <sub>· 🇪🇸 Versión en español más abajo</sub></summary>
 
 ### Hi, I'm Antonio Company 👋
 

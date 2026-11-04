@@ -3,7 +3,7 @@
 
 ### Hi, I'm Antonio Company 👋
 
-.NET developer moving into DevOps and CI/CD. I come from building and maintaining business applications (C#, SQL Server), and I'm currently building my profile around Docker, pipeline automation and infrastructure as code.
+.NET developer with DevOps experience. At work I own the CI/CD of several applications (Azure DevOps Pipelines and GitHub Actions), migrated repositories from TFS 2018 to Git and organise the work in Azure Boards. In my own projects I apply Docker, Terraform on Azure and AWS, Kubernetes and security inside the pipeline. I come from .NET development, so I understand the code I deploy, not just the pipeline.
 
 [![Interactive CV](https://img.shields.io/badge/Interactive%20CV-antonio--cv-10B981?style=for-the-badge&logo=vercel&logoColor=white)](https://antonio-cv-five.vercel.app/?lang=en) [![LinkedIn](https://img.shields.io/badge/LinkedIn-antoniocompany-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/antoniocompany/?locale=en-US)
 
@@ -18,6 +18,7 @@
 - Observability — Azure Monitor / Application Insights with OpenTelemetry, and email alerts on 5xx errors and 401/403 spikes
 - Terraform — Azure infrastructure as code: imported existing resources, remote state in Azure Storage, security scanning of the configuration and an automatic `plan` on every PR via OIDC
 - Azure Key Vault — production secrets read by the API through its managed identity, with RBAC and least privilege; the values never reach the Terraform state
+- Multicloud (Azure + AWS) — the same API image also runs on AWS (ECS Express Mode + RDS SQL Server), with its own Terraform and remote state in S3: brought up and torn down with one command (~20 min), secrets as write-only values in SSM Parameter Store, and the design recorded in an ADR
 - Jenkins — declarative pipelines (Jenkinsfile) with a controller and a Linux agent on Docker Compose, JUnit tests, artifacts, parameters and credentials
 - Kubernetes and Helm — deploying the API to a cluster with my own chart: replicas and zero-downtime updates, startup/liveness/readiness probes, SQL Server as a StatefulSet with a persistent volume, and Ingress with Traefik
 
@@ -27,6 +28,7 @@
 - SQL Server
 - HTML, CSS, JavaScript / TypeScript · Node.js, React, Tailwind CSS
 - Java/Kotlin (Android Studio)
+- AI-assisted development — Claude Code every day, guided by my own kit of rules and skills ([ai-project-kit](#other-projects)): tests first, and the AI never commits
 
 ## 🚀 Featured projects
 
@@ -42,7 +44,7 @@
 | [Open the demo](https://financetracker-web-tau.vercel.app/login) | [Download APK](https://github.com/antonicr1986/financetracker-android/releases/latest/download/financetracker.apk) | [Microsoft Store](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=en-us) | [Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger) |
 | In the browser, nothing to install | Android 7.0 or later | Windows 10/11, one click | Documented endpoints |
 
-Use the **demo account** button or `demo@financetracker.app` / `Demo1234!`. The API is on Azure's free tier: on weekdays during working hours it is kept awake, and all three apps wake the database as soon as the sign-in screen opens, so the wait happens while you read it.
+Use the **demo account** button or `demo@financetracker.app` / `Demo1234!`. The database is serverless and pauses when idle: all three apps wake it as soon as the sign-in screen opens, so the wait happens while you read it.
 
 A complete personal finance system: a REST API and three clients consuming it from different platforms. Writing several consumers is what turns an API into a contract: the same endpoints, the same error codes and the same business rules, reached from another language and another platform. The three clients share a corporate look, light/dark theme, Spanish/English and the same demo account, one click away.
 
@@ -55,15 +57,26 @@ flowchart LR
     end
 
     API[REST API · .NET 8]
-    DB[(Azure SQL)]
+
+    subgraph AZURE[Azure · production]
+        AZ[App Service]
+        DB[(Azure SQL)]
+    end
+
+    subgraph AWSC[AWS · on demand]
+        ECS[ECS Express Mode]
+        RDS[(RDS SQL Server)]
+    end
 
     WEB --> API
     AND --> API
     DESK --> API
-    API --> DB
+    AZ --> DB
+    ECS --> RDS
 
     API -. CI .-> GHCR[GHCR image · scanned with Trivy]
-    GHCR -. CD .-> AZ[Azure App Service]
+    GHCR -. CD .-> AZ
+    GHCR -. Terraform .-> ECS
     WEB -. CI/CD .-> VER[Vercel]
     AND -. CI .-> APK[Downloadable APK]
     DESK -. CI/CD .-> REL[GitHub Release · .exe/.zip + Microsoft Store]
@@ -87,13 +100,23 @@ flowchart LR
 [![Release](https://img.shields.io/github/v/release/antonicr1986/financetracker-desktop?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonicr1986/financetracker-desktop/releases/latest)
 [![Microsoft Store](https://img.shields.io/badge/Microsoft_Store-Available-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=en-us)
 
-- 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — REST API in .NET 8 with a layered architecture, JWT authentication and automated tests. Dockerised (API + SQL Server) and backed by a pipeline that builds, runs the tests and **publishes the image to GitHub Container Registry**, tagged by commit so any specific version can be deployed or rolled back. In production, **Azure App Service runs that very same image** —the one that passed the scan— against Azure SQL, deployed from the pipeline itself without rebuilding. It is only deployed if **every** check passes —tests, secrets, image and infrastructure—, and before deploying **OWASP ZAP** attacks every endpoint in a throwaway environment. The Azure infrastructure is described with **Terraform** and scanned with **Trivy** before every deployment: every pull request gets an automatic `plan`, signing in to Azure via **OIDC** —no passwords stored in GitHub— with a read-only identity. The connection string and the JWT key live in **Key Vault**, and the API reads them at startup through its **managed identity**: its configuration holds only references, not passwords. In production, **Application Insights** (OpenTelemetry) collects requests, errors and logs, and Azure Monitor emails me on 5xx errors or 401/403 spikes. The same image is also deployed to **Kubernetes** with my own **Helm chart**: 2 replicas with zero-downtime updates, startup, liveness and readiness probes, an *initContainer* that waits for the database, SQL Server as a StatefulSet with a persistent volume, and Ingress with Traefik; the pipeline validates the chart on every pull request. **[Browse the API in Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)** — it's on a free tier with serverless SQL, so the first request after a while idle takes a few seconds.
+- 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — REST API in .NET 8 with a layered architecture, JWT authentication and automated tests. Dockerised (API + SQL Server) and backed by a pipeline that builds, runs the tests and **publishes the image to GitHub Container Registry**, tagged by commit so any specific version can be deployed or rolled back. In production, **Azure App Service runs that very same image** —the one that passed the scan— against Azure SQL, deployed from the pipeline itself without rebuilding. It is only deployed if **every** check passes —tests, secrets, image and infrastructure—, and before deploying **OWASP ZAP** attacks every endpoint in a throwaway environment. The Azure infrastructure is described with **Terraform** and scanned with **Trivy** before every deployment: every pull request gets an automatic `plan`, signing in to Azure via **OIDC** —no passwords stored in GitHub— with a read-only identity. The connection string and the JWT key live in **Key Vault**, and the API reads them at startup through its **managed identity**: its configuration holds only references, not passwords. The **same image** also runs on **AWS** (ECS Express Mode on Fargate + RDS SQL Server), with its own **Terraform** and remote state in S3: the whole environment comes up with one `terraform apply` and goes away with one `destroy`, about 20 minutes each, so it only costs while it is in use. The database password and the JWT key are *write-only* values in **SSM Parameter Store** and never reach the state, the AWS Terraform is scanned by Trivy like Azure's, and the design —one Terraform per cloud with a shared contract— is recorded in an **ADR**. It is the groundwork for a migration from Azure to AWS with under 5 minutes of downtime. In production, **Application Insights** (OpenTelemetry) collects requests, errors and logs, and Azure Monitor emails me on 5xx errors or 401/403 spikes. The same image is also deployed to **Kubernetes** with my own **Helm chart**: 2 replicas with zero-downtime updates, startup, liveness and readiness probes, an *initContainer* that waits for the database, SQL Server as a StatefulSet with a persistent volume, and Ingress with Traefik; the pipeline validates the chart on every pull request. **[Browse the API in Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)** — with serverless SQL, the first request after a while idle takes a few seconds.
 
 [![CI FinanceTracker](https://img.shields.io/github/actions/workflow/status/antonicr1986/FinanceTracker/ci.yml?style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/FinanceTracker/actions)
 
 ### Other projects
 
-- 🔧 **Jenkins CI for .NET** *(private repos)* — Jenkins set up with **Docker Compose** the way a company would: a *controller* that only coordinates (0 executors) and a **Linux agent with the .NET 10 SDK** connected over WebSocket. A **declarative Jenkinsfile** versioned in Git restores, builds, runs the tests with **JUnit** results published and archives fingerprinted artifacts. When tests fail, the build goes **UNSTABLE** and nothing is published. It includes build parameters, credentials masked in the logs, cloning the private repo with a read-only token, SCM polling, `timeout` and build rotation. The infrastructure is in Git too: it is reproduced on another machine with a `docker compose up`.
+- 🧰 **ai-project-kit** *(private repo · [download it from my CV](https://antonio-cv-five.vercel.app/?lang=en))* — A kit that prepares any project to be developed safely with AI assistants: rules for the AI (`CLAUDE.md`, `AGENTS.md`), a workflow of skills —`/backlog` → `/story` → `/pair` → `/code-review`: short stories, tests first, and the AI never commits or pushes— and CI templates for GitHub Actions and Azure DevOps with Gitleaks, actions pinned by SHA, least privilege and tools whose SHA-256 is verified. A PowerShell installer (double click or Explorer right-click) detects whether the project is new or existing and updates it without overwriting customisations. Automatic releases from Conventional Commits, 8 ADRs and 113 Pester tests, end-to-end tests of the template included. FinanceTracker itself is built with it.
+
+![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=gnometerminal&logoColor=white)
+![Claude Code](https://img.shields.io/badge/Claude_Code-D97757?style=for-the-badge&logo=claude&logoColor=white)
+
+- 📄 **antonio-cv** *(private repo · [open it](https://antonio-cv-five.vercel.app/?lang=en))* — My interactive CV in Next.js 16, React 19, TypeScript and Tailwind CSS 4: bilingual, light/dark and printable to PDF. It includes an **AI chat** (OpenAI) that answers questions about my profile, hardened like any public API: burst, hourly and daily rate limits, same-origin JSON only and links restricted to known URLs. The pipeline scans the history with gitleaks and runs lint, `npm audit`, tests and the build; only with all of that green does it deploy to Vercel, followed by a smoke test and an OWASP ZAP scan of the live site. lychee checks every link, and actions are pinned by SHA.
+
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![OpenAI](https://img.shields.io/badge/AI_chat-412991?style=for-the-badge&logo=openai&logoColor=white)
+
+- 🔧 **Jenkins CI for .NET** *(private repos)* — Jenkins set up with **Docker Compose** the way a company would: a *controller* that only coordinates (0 executors) and a **Linux agent with the .NET 10 SDK** connected over WebSocket. A **declarative Jenkinsfile** versioned in Git restores, builds, runs the tests with **JUnit** results published and archives fingerprinted artifacts. When tests fail, the build goes **UNSTABLE** and nothing is published. It includes build parameters, credentials masked in the logs, cloning the private repo with a read-only token, SCM polling, `timeout` and build rotation. The infrastructure is in Git too: it is reproduced on another machine with a `docker compose up`. Versions are pinned and the .NET SDK is copied from the official image in a multi-stage build. Its own CI runs **Gitleaks**, **Hadolint** and **Trivy** with least privilege and actions pinned by SHA: the first scan found 20 high vulnerabilities, all of them fixed.
 
 ![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker_Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
@@ -121,7 +144,7 @@ flowchart LR
 | 📱 Android APK | **MobSF** | On every push and pull request (blocks on new high findings) |
 | 🏗️ Infrastructure as code | **Trivy** (`trivy config`) | Before deploying |
 | 🌐 Running application (DAST) | **OWASP ZAP**: active and authenticated in a throwaway environment · passive in production | Before deploying the API (blocks) and after every deployment |
-| 🗝️ Production secrets | **Azure Key Vault** · managed identity | Always: the API reads them at startup |
+| 🗝️ Production secrets | **Azure Key Vault** · managed identity · **AWS SSM** (write-only) | Always: the API reads them at startup |
 | 🔐 Least privilege | read-only `GITHUB_TOKEN` · **OIDC** | In every workflow |
 | 🔄 Staying up to date | **Dependabot** | One pull request a month |
 
@@ -130,6 +153,7 @@ flowchart LR
 - **Custom rules.** They extend gitleaks' defaults, which catch keys from well-known providers but not a password inside a connection string — the shape a leak takes in a .NET project.
 - **Audited history.** It surfaced real credentials from 2023 and 2024. They are revoked, and each is recorded in `.gitleaksignore` with what it was and what was done, because a pipeline that stays red stops being read.
 - **CI detects, the hook prevents.** By the time the workflow fails, the commit is already published; the local `pre-commit` hook blocks it before it exists.
+- **Verified tools.** In the API's pipeline, gitleaks is installed at a pinned version and its SHA-256 is checked before it runs.
 - **No secrets from the first commit.** The Telegram bot never had its token in the code: it reads it from an environment variable.
 
 ### 📦 Dependencies
@@ -145,13 +169,14 @@ flowchart LR
 - **DAST that blocks.** Before deploying, the pipeline starts a throwaway API and SQL Server, signs in and OWASP ZAP attacks every endpoint from the Swagger spec: if it finds anything new, nothing is deployed. Afterwards, ZAP passively reviews the published API and web app. Accepted risks are documented with their reason in `.zap/rules.tsv`, and reports are kept as artifacts rather than issues, because the repos are public.
 - **Security headers** on the API and the web app (CSP, HSTS, anti-clickjacking, `nosniff`...), added from the ZAP reports.
 - **Watching production.** Application Insights collects the API's requests, errors and logs, and Azure Monitor sends an email on 5xx errors or 401/403 spikes, the footprint of a brute-force attack. All defined in Terraform.
-- **Rotatable credentials.** The SQL admin password is a Terraform *write-only* argument: rotating it means bumping a version number, and it never reaches the state.
+- **Rotatable credentials.** The SQL admin password is a Terraform *write-only* argument: rotating it means bumping a version number, and it never reaches the state. On AWS, the RDS password and the JWT key work the same way, and the ECS role can read only those two parameters.
 - **Least privilege.** The `GITHUB_TOKEN` is read-only by default and each job asks only for what it needs. Azure is reached via OIDC, with no passwords stored in GitHub, and the API has its own managed identity, whose only permission is reading secrets from its Key Vault.
 - **Bounded pipelines.** Only one production deployment at a time (`concurrency`) and a time limit per job, so a stuck one does not burn minutes for hours.
 
 ---
 
-- 🔭 At WORK: .NET developer, with some work on Android and internal web apps.
+- 🔭 At work: .NET developer and owner of the CI/CD of several applications (Azure DevOps and GitHub Actions), with some Android and web work.
+- 🎓 Latest course: [Claude Code in Action](https://verify.skilljar.com/c/fmhryo5fni98) (Anthropic, Aug 2026).
 - 🌱 Currently learning: GitOps with Argo CD and Jenkins Configuration as Code, applying them in personal projects.
 - 🤔 Interested in going deeper into: application architecture, AI tooling, testing and best practices.
 - 📫 Contact: [LinkedIn](https://www.linkedin.com/in/antoniocompany/?locale=en-US "Go to my profile") · [Interactive CV](https://antonio-cv-five.vercel.app/?lang=en "See my interactive CV").
@@ -164,7 +189,7 @@ flowchart LR
 
 ### Hola, soy Antonio Company 👋
 
-Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y mantenimiento de aplicaciones empresariales (C#, SQL Server) y ahora mismo estoy construyendo mi perfil en Docker, automatización de pipelines e infraestructura como código.
+Desarrollador .NET con experiencia en DevOps. En el trabajo llevo el CI/CD de varias aplicaciones (Azure DevOps Pipelines y GitHub Actions), he migrado repositorios de TFS 2018 a Git y organizo el trabajo en Azure Boards. En mis proyectos aplico Docker, Terraform en Azure y AWS, Kubernetes y seguridad dentro del pipeline. Vengo del desarrollo .NET, así que entiendo el código que despliego y no solo el pipeline.
 
 [![CV web](https://img.shields.io/badge/CV_web-antonio--cv-10B981?style=for-the-badge&logo=vercel&logoColor=white)](https://antonio-cv-five.vercel.app/?lang=es) [![LinkedIn](https://img.shields.io/badge/LinkedIn-antoniocompany-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/antoniocompany/?locale=es_ES)
 
@@ -179,6 +204,7 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 - Observabilidad — Azure Monitor / Application Insights con OpenTelemetry, y alertas por email ante errores 5xx y picos de 401/403
 - Terraform — infraestructura de Azure como código: import de recursos existentes, estado remoto en Azure Storage, escaneo de seguridad de la configuración y `plan` automático en cada PR con OIDC
 - Azure Key Vault — secretos de producción que la API lee con su identidad administrada, con RBAC y mínimo privilegio; los valores nunca llegan al estado de Terraform
+- Multicloud (Azure + AWS) — la misma imagen de la API corre también en AWS (ECS Express Mode + RDS SQL Server), con su propio Terraform y estado remoto en S3: se levanta y se destruye con un comando (~20 min), secretos write-only en SSM Parameter Store y el diseño recogido en un ADR
 - Jenkins — pipelines declarativos (Jenkinsfile) con controller y agente Linux en Docker Compose, tests JUnit, artefactos, parámetros y credenciales
 - Kubernetes y Helm — despliegue de la API en un clúster con un chart propio: réplicas y actualizaciones sin corte, sondas startup/liveness/readiness, SQL Server en StatefulSet con volumen persistente e Ingress con Traefik
 
@@ -189,6 +215,7 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 - SQL Server
 - HTML, CSS, JavaScript / TypeScript · Node.js, React, Tailwind CSS
 - Java/Kotlin (desarrollo con Android Studio)
+- Desarrollo asistido por IA — Claude Code a diario, guiado por mi propio kit de reglas y skills ([ai-project-kit](#otros-proyectos)): tests primero, y la IA nunca hace commit
 
 ## 🚀 Proyectos destacados
 
@@ -204,7 +231,7 @@ Desarrollador .NET en transición a DevOps CI/CD. Vengo del desarrollo y manteni
 | [Abrir la demo](https://financetracker-web-tau.vercel.app/login) | [Descargar APK](https://github.com/antonicr1986/financetracker-android/releases/latest/download/financetracker.apk) | [Microsoft Store](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=es-es) | [Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger) |
 | En el navegador, sin instalar nada | Android 7.0 o superior | Windows 10/11, un clic | Endpoints documentados |
 
-Entra con el botón de la **cuenta de demostración** o con `demo@financetracker.app` / `Demo1234!`. La API está en el plan gratuito de Azure: entre semana, en horario laboral, se mantiene despierta, y las tres apps despiertan la base de datos en cuanto se abre el login, así que la espera ocurre mientras lo lees.
+Entra con el botón de la **cuenta de demostración** o con `demo@financetracker.app` / `Demo1234!`. La base de datos es serverless y se pausa cuando no se usa: las tres apps la despiertan en cuanto se abre el login, así que la espera ocurre mientras lo lees.
 
 Un sistema de finanzas personales completo: una API REST y tres clientes que la consumen desde plataformas distintas. Escribir varios consumidores es lo que convierte una API en un contrato: los mismos endpoints, los mismos códigos de error y las mismas reglas de negocio, alcanzados desde otro lenguaje y otra plataforma. Los tres clientes comparten estética corporativa, tema claro/oscuro, español/inglés y la misma cuenta de demostración, a un clic.
 
@@ -217,15 +244,26 @@ flowchart LR
     end
 
     API[API REST · .NET 8]
-    DB[(Azure SQL)]
+
+    subgraph AZURE[Azure · producción]
+        AZ[App Service]
+        DB[(Azure SQL)]
+    end
+
+    subgraph AWSC[AWS · bajo demanda]
+        ECS[ECS Express Mode]
+        RDS[(RDS SQL Server)]
+    end
 
     WEB --> API
     AND --> API
     DESK --> API
-    API --> DB
+    AZ --> DB
+    ECS --> RDS
 
     API -. CI .-> GHCR[Imagen en GHCR · escaneada con Trivy]
-    GHCR -. CD .-> AZ[Azure App Service]
+    GHCR -. CD .-> AZ
+    GHCR -. Terraform .-> ECS
     WEB -. CI/CD .-> VER[Vercel]
     AND -. CI .-> APK[APK descargable]
     DESK -. CI/CD .-> REL[GitHub Release · .exe/.zip + Microsoft Store]
@@ -249,13 +287,23 @@ flowchart LR
 [![Release](https://img.shields.io/github/v/release/antonicr1986/financetracker-desktop?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonicr1986/financetracker-desktop/releases/latest)
 [![Microsoft Store](https://img.shields.io/badge/Microsoft_Store-Disponible-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=es-es)
 
-- 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8 con arquitectura por capas, autenticación JWT y tests automatizados. Dockerizada (API + SQL Server) y con un pipeline que compila, ejecuta los tests y **publica la imagen en GitHub Container Registry**, etiquetada por commit para poder desplegar o revertir cualquier versión concreta. En producción, **Azure App Service ejecuta esa misma imagen** —la que ha pasado el escaneo— contra Azure SQL, desplegada desde el propio pipeline sin volver a compilar. Solo se despliega si pasan **todos** los controles —tests, secretos, imagen e infraestructura—, y antes de desplegar **OWASP ZAP** ataca todos sus endpoints en un entorno desechable. La infraestructura de Azure está descrita con **Terraform** y escaneada con **Trivy** antes de cada despliegue: cada pull request muestra un `plan` automático, con acceso a Azure por **OIDC** —sin contraseñas guardadas en GitHub— y una identidad de solo lectura. La cadena de conexión y la clave JWT viven en **Key Vault**, y la API las lee al arrancar con su **identidad administrada**: en su configuración solo hay referencias, no contraseñas. En producción, **Application Insights** (OpenTelemetry) recoge peticiones, errores y logs, y Azure Monitor avisa por email ante errores 5xx o picos de 401/403. La misma imagen también se despliega en **Kubernetes** con un **chart de Helm** propio: 2 réplicas con actualizaciones sin corte, sondas de arranque, vida y disponibilidad, un *initContainer* que espera a la base de datos, SQL Server en un StatefulSet con volumen persistente e Ingress con Traefik; el pipeline valida el chart en cada pull request. **[Ver la API en Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)** — plan gratuito con SQL serverless, así que la primera petición tras un rato de inactividad tarda unos segundos.
+- 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8 con arquitectura por capas, autenticación JWT y tests automatizados. Dockerizada (API + SQL Server) y con un pipeline que compila, ejecuta los tests y **publica la imagen en GitHub Container Registry**, etiquetada por commit para poder desplegar o revertir cualquier versión concreta. En producción, **Azure App Service ejecuta esa misma imagen** —la que ha pasado el escaneo— contra Azure SQL, desplegada desde el propio pipeline sin volver a compilar. Solo se despliega si pasan **todos** los controles —tests, secretos, imagen e infraestructura—, y antes de desplegar **OWASP ZAP** ataca todos sus endpoints en un entorno desechable. La infraestructura de Azure está descrita con **Terraform** y escaneada con **Trivy** antes de cada despliegue: cada pull request muestra un `plan` automático, con acceso a Azure por **OIDC** —sin contraseñas guardadas en GitHub— y una identidad de solo lectura. La cadena de conexión y la clave JWT viven en **Key Vault**, y la API las lee al arrancar con su **identidad administrada**: en su configuración solo hay referencias, no contraseñas. La **misma imagen** corre también en **AWS** (ECS Express Mode sobre Fargate + RDS SQL Server), con su propio **Terraform** y estado remoto en S3: todo el entorno se levanta con un `terraform apply` y se destruye con un `destroy`, unos 20 minutos cada uno, así que solo cuesta mientras se usa. La contraseña de la base de datos y la clave JWT son valores *write-only* en **SSM Parameter Store** y nunca llegan al estado, Trivy escanea el Terraform de AWS igual que el de Azure, y el diseño —un Terraform por nube con un contrato común— está recogido en un **ADR**. Es la base para migrar de Azure a AWS con menos de 5 minutos de caída. En producción, **Application Insights** (OpenTelemetry) recoge peticiones, errores y logs, y Azure Monitor avisa por email ante errores 5xx o picos de 401/403. La misma imagen también se despliega en **Kubernetes** con un **chart de Helm** propio: 2 réplicas con actualizaciones sin corte, sondas de arranque, vida y disponibilidad, un *initContainer* que espera a la base de datos, SQL Server en un StatefulSet con volumen persistente e Ingress con Traefik; el pipeline valida el chart en cada pull request. **[Ver la API en Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)** — con SQL serverless, la primera petición tras un rato de inactividad tarda unos segundos.
 
 [![CI FinanceTracker](https://img.shields.io/github/actions/workflow/status/antonicr1986/FinanceTracker/ci.yml?style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/FinanceTracker/actions)
 
 ### Otros proyectos
 
-- 🔧 **Jenkins CI para .NET** *(repos privados)* — Jenkins montado con **Docker Compose** como en una empresa: un *controller* que solo coordina (0 ejecutores) y un **agente Linux con el SDK de .NET 10** conectado por WebSocket. Un **Jenkinsfile declarativo** versionado en Git restaura, compila, ejecuta los tests con resultados **JUnit** publicados y archiva los artefactos con huella. Si fallan tests, el build queda **UNSTABLE** y no se publica nada. Incluye parámetros de compilación, credenciales enmascaradas en los logs, clonado del repo privado con un token de solo lectura, polling del SCM, `timeout` y rotación de builds. La infraestructura también está en Git: se reproduce en otro equipo con un `docker compose up`.
+- 🧰 **ai-project-kit** *(repo privado · [descárgalo desde mi CV](https://antonio-cv-five.vercel.app/?lang=es))* — Kit que prepara cualquier proyecto para desarrollar con asistentes de IA de forma segura: reglas para la IA (`CLAUDE.md`, `AGENTS.md`), un flujo de skills —`/backlog` → `/story` → `/pair` → `/code-review`: historias cortas, tests primero y la IA nunca hace commit ni push— y plantillas de CI para GitHub Actions y Azure DevOps con Gitleaks, acciones fijadas por SHA, permisos mínimos y herramientas con el SHA-256 verificado. Un instalador en PowerShell (doble clic o botón derecho del Explorador) detecta si el proyecto es nuevo o existente y lo actualiza sin pisar lo personalizado. Releases automáticas con Conventional Commits, 8 ADR y 113 pruebas con Pester, incluidas pruebas e2e de la plantilla. FinanceTracker se desarrolla con él.
+
+![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=gnometerminal&logoColor=white)
+![Claude Code](https://img.shields.io/badge/Claude_Code-D97757?style=for-the-badge&logo=claude&logoColor=white)
+
+- 📄 **antonio-cv** *(repo privado · [ábrelo](https://antonio-cv-five.vercel.app/?lang=es))* — Mi CV interactivo en Next.js 16, React 19, TypeScript y Tailwind CSS 4: bilingüe, con tema claro/oscuro e imprimible en PDF. Incluye un **chat con IA** (OpenAI) que responde preguntas sobre mi perfil, protegido como cualquier API pública: límites por ráfaga, por hora y por día, solo JSON del mismo origen y enlaces restringidos a URLs conocidas. El pipeline escanea el historial con gitleaks y pasa lint, `npm audit`, tests y build; solo con todo en verde despliega en Vercel, y después lanza un smoke test y un escaneo de OWASP ZAP sobre la web publicada. lychee comprueba todos los enlaces y las acciones están fijadas por SHA.
+
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![OpenAI](https://img.shields.io/badge/Chat_con_IA-412991?style=for-the-badge&logo=openai&logoColor=white)
+
+- 🔧 **Jenkins CI para .NET** *(repos privados)* — Jenkins montado con **Docker Compose** como en una empresa: un *controller* que solo coordina (0 ejecutores) y un **agente Linux con el SDK de .NET 10** conectado por WebSocket. Un **Jenkinsfile declarativo** versionado en Git restaura, compila, ejecuta los tests con resultados **JUnit** publicados y archiva los artefactos con huella. Si fallan tests, el build queda **UNSTABLE** y no se publica nada. Incluye parámetros de compilación, credenciales enmascaradas en los logs, clonado del repo privado con un token de solo lectura, polling del SCM, `timeout` y rotación de builds. La infraestructura también está en Git: se reproduce en otro equipo con un `docker compose up`. Las versiones están fijadas y el SDK de .NET se copia de la imagen oficial con un build multi-stage. Su propio CI pasa **Gitleaks**, **Hadolint** y **Trivy** con permisos mínimos y acciones fijadas por SHA: el primer escaneo encontró 20 vulnerabilidades altas, todas resueltas.
 
 ![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker_Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
@@ -283,7 +331,7 @@ flowchart LR
 | 📱 APK de Android | **MobSF** | En cada push y pull request (bloquea con hallazgos altos nuevos) |
 | 🏗️ Infraestructura como código | **Trivy** (`trivy config`) | Antes de desplegar |
 | 🌐 Aplicación en marcha (DAST) | **OWASP ZAP**: activo y autenticado en un entorno desechable · pasivo en producción | Antes de desplegar la API (bloquea) y después de cada despliegue |
-| 🗝️ Secretos en producción | **Azure Key Vault** · identidad administrada | Siempre: la API los lee al arrancar |
+| 🗝️ Secretos en producción | **Azure Key Vault** · identidad administrada · **AWS SSM** (write-only) | Siempre: la API los lee al arrancar |
 | 🔐 Mínimo privilegio | `GITHUB_TOKEN` de solo lectura · **OIDC** | En todos los workflows |
 | 🔄 Mantenerse al día | **Dependabot** | Una pull request al mes |
 
@@ -292,6 +340,7 @@ flowchart LR
 - **Reglas propias.** Extienden las de gitleaks: las de serie detectan claves de proveedores conocidos, pero no una contraseña dentro de una cadena de conexión, que es la forma que toma una fuga en un proyecto .NET.
 - **Historial auditado.** Aparecieron credenciales reales de 2023 y 2024. Están revocadas y cada una queda registrada en `.gitleaksignore` con qué era y qué se hizo, porque un pipeline siempre en rojo deja de leerse.
 - **El CI detecta, el hook previene.** Cuando el workflow falla, el commit ya está publicado; el `pre-commit` local lo bloquea antes de que llegue a existir.
+- **Herramientas verificadas.** En el pipeline de la API, gitleaks se instala con una versión fijada y se comprueba su SHA-256 antes de ejecutarlo.
 - **Sin secretos desde el primer commit.** El bot de Telegram nunca tuvo el token en el código: lo lee de una variable de entorno.
 
 ### 📦 Dependencias
@@ -307,13 +356,14 @@ flowchart LR
 - **DAST que bloquea.** Antes de desplegar, el pipeline levanta la API y un SQL Server desechables, inicia sesión y OWASP ZAP ataca todos los endpoints a partir del Swagger: si encuentra algo nuevo, no se despliega. Después, ZAP revisa de forma pasiva la API y la web ya publicadas. Los riesgos aceptados están documentados con su motivo en `.zap/rules.tsv`, y los informes quedan como artefactos y no como issues, porque los repos son públicos.
 - **Cabeceras de seguridad** en la API y la web (CSP, HSTS, anti-clickjacking, `nosniff`...), añadidas a partir de los informes de ZAP.
 - **Vigilancia en producción.** Application Insights recoge peticiones, errores y logs de la API, y Azure Monitor avisa por email ante errores 5xx o picos de 401/403, la huella de un ataque de fuerza bruta. Todo definido en Terraform.
-- **Credenciales que se rotan.** La contraseña del administrador SQL es un argumento *write-only* de Terraform: rotarla es subir un número de versión, sin que llegue nunca al estado.
+- **Credenciales que se rotan.** La contraseña del administrador SQL es un argumento *write-only* de Terraform: rotarla es subir un número de versión, sin que llegue nunca al estado. En AWS, la contraseña de RDS y la clave JWT funcionan igual, y el rol de ECS solo puede leer esos dos parámetros.
 - **Mínimo privilegio.** El `GITHUB_TOKEN` es de solo lectura por defecto y cada job pide solo lo que necesita. Azure se alcanza por OIDC, sin contraseñas guardadas en GitHub, y la API tiene su propia identidad administrada, cuyo único permiso es leer los secretos de su Key Vault.
 - **Pipelines acotados.** Un solo despliegue a producción a la vez (`concurrency`) y un tiempo máximo por job, para que uno colgado no consuma minutos durante horas.
 
 ---
 
-- 🔭 En EL TRABAJO: programador .NET, con incursiones en apps Android y web internas.
+- 🔭 En el trabajo: programador .NET y responsable del CI/CD de varias aplicaciones (Azure DevOps y GitHub Actions), con incursiones en Android y web.
+- 🎓 Último curso: [Claude Code in Action](https://verify.skilljar.com/c/fmhryo5fni98) (Anthropic, agosto de 2026).
 - 🌱 Aprendiendo ahora mismo: GitOps con Argo CD y Jenkins Configuration as Code, aplicándolo en proyectos personales.
 - 🤔 Me interesa profundizar en: arquitectura de aplicaciones, herramientas IA, testing y buenas prácticas.
 - 📫 Contacto: [LinkedIn](https://www.linkedin.com/in/antoniocompany/?locale=es-ES "Ir a mi perfil") · [CV web](https://antonio-cv-five.vercel.app/?lang=es "Ver mi CV").

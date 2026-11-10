@@ -177,7 +177,7 @@ flowchart LR
 
 ---
 
-- 🔭 At work: .NET developer and owner of the CI/CD of several applications (Azure DevOps and GitHub Actions); I also manage their SQL Server database and Azure services (App Service, Key Vault), built a generative AI chatbot with RAG, and do some Android and web work.
+- 🔭 At work: .NET developer and owner of the CI/CD of several applications (Azure DevOps and GitHub Actions); I also manage their SQL Server database and Azure services, built a generative AI chatbot with RAG, and do some Android and web work.
 - 🎓 Latest course: [Claude Code in Action](https://verify.skilljar.com/c/fmhryo5fni98) (Anthropic, Aug 2026).
 - 🌱 Currently learning: GitOps with Argo CD and Jenkins Configuration as Code, applying them in personal projects.
 - 🤔 Interested in going deeper into: application architecture, AI tooling, testing and best practices.
@@ -366,7 +366,7 @@ flowchart LR
 
 ---
 
-- 🔭 En el trabajo: programador .NET y responsable del CI/CD de varias aplicaciones (Azure DevOps y GitHub Actions); también gestiono su base de datos SQL Server y sus servicios de Azure (App Service, Key Vault), he desarrollado un chatbot de IA generativa con RAG y hago algo de Android y web.
+- 🔭 En el trabajo: programador .NET y responsable del CI/CD de varias aplicaciones (Azure DevOps y GitHub Actions); también administro su base de datos SQL Server, he desarrollado un chatbot de IA generativa con RAG y hago algo de Android y web.
 - 🎓 Último curso: [Claude Code in Action](https://verify.skilljar.com/c/fmhryo5fni98) (Anthropic, agosto de 2026).
 - 🌱 Aprendiendo ahora mismo: GitOps con Argo CD y Jenkins Configuration as Code, aplicándolo en proyectos personales.
 - 🤔 Me interesa profundizar en: arquitectura de aplicaciones, herramientas IA, testing y buenas prácticas.

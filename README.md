@@ -3,7 +3,9 @@
 
 ### Hi, I'm Antonio Company 👋
 
-.NET developer with DevOps experience. At work I own the CI/CD of several applications (Azure DevOps Pipelines and GitHub Actions), migrated repositories from TFS 2018 to Git and organise the work in Azure Boards. In my own projects I apply Docker, Terraform on Azure and AWS, Kubernetes and security inside the pipeline. I come from .NET development, so I understand the code I deploy, not just the pipeline.
+**DevOps · DevSecOps | Azure · CI/CD · Kubernetes · Terraform | .NET**
+
+.NET developer with DevOps and DevSecOps experience. At work I own the CI/CD of several applications (Azure DevOps Pipelines and GitHub Actions), migrated repositories from TFS 2018 to Git and organise the work in Azure Boards. In my own projects I apply Docker, Terraform on Azure and AWS, Kubernetes and security inside the pipeline (SAST, SCA, secrets, containers, IaC and DAST): I want security to speed delivery up, not slow it down. I come from .NET development, so I understand the code I deploy, not just the pipeline.
 
 [![Interactive CV](https://img.shields.io/badge/Interactive%20CV-antonio--cv-10B981?style=for-the-badge&logo=vercel&logoColor=white)](https://antonio-cv-five.vercel.app/?lang=en) [![LinkedIn](https://img.shields.io/badge/LinkedIn-antoniocompany-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/antoniocompany/?locale=en-US)
 
@@ -175,7 +177,7 @@ flowchart LR
 
 ---
 
-- 🔭 At work: .NET developer and owner of the CI/CD of several applications (Azure DevOps and GitHub Actions), with some Android and web work.
+- 🔭 At work: .NET developer and owner of the CI/CD of several applications (Azure DevOps and GitHub Actions); I also manage their SQL Server database and Azure services (App Service, Key Vault), built a generative AI chatbot with RAG, and do some Android and web work.
 - 🎓 Latest course: [Claude Code in Action](https://verify.skilljar.com/c/fmhryo5fni98) (Anthropic, Aug 2026).
 - 🌱 Currently learning: GitOps with Argo CD and Jenkins Configuration as Code, applying them in personal projects.
 - 🤔 Interested in going deeper into: application architecture, AI tooling, testing and best practices.
@@ -189,7 +191,9 @@ flowchart LR
 
 ### Hola, soy Antonio Company 👋
 
-Desarrollador .NET con experiencia en DevOps. En el trabajo llevo el CI/CD de varias aplicaciones (Azure DevOps Pipelines y GitHub Actions), he migrado repositorios de TFS 2018 a Git y organizo el trabajo en Azure Boards. En mis proyectos aplico Docker, Terraform en Azure y AWS, Kubernetes y seguridad dentro del pipeline. Vengo del desarrollo .NET, así que entiendo el código que despliego y no solo el pipeline.
+**DevOps · DevSecOps | Azure · CI/CD · Kubernetes · Terraform | .NET**
+
+Desarrollador .NET con experiencia en DevOps y DevSecOps. En el trabajo llevo el CI/CD de varias aplicaciones (Azure DevOps Pipelines y GitHub Actions), he migrado repositorios de TFS 2018 a Git y organizo el trabajo en Azure Boards. En mis proyectos aplico Docker, Terraform en Azure y AWS, Kubernetes y seguridad dentro del pipeline (SAST, SCA, secretos, contenedores, IaC y DAST): busco que la seguridad acelere la entrega, no que la frene. Vengo del desarrollo .NET, así que entiendo el código que despliego y no solo el pipeline.
 
 [![CV web](https://img.shields.io/badge/CV_web-antonio--cv-10B981?style=for-the-badge&logo=vercel&logoColor=white)](https://antonio-cv-five.vercel.app/?lang=es) [![LinkedIn](https://img.shields.io/badge/LinkedIn-antoniocompany-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/antoniocompany/?locale=es_ES)
 
@@ -362,7 +366,7 @@ flowchart LR
 
 ---
 
-- 🔭 En el trabajo: programador .NET y responsable del CI/CD de varias aplicaciones (Azure DevOps y GitHub Actions), con incursiones en Android y web.
+- 🔭 En el trabajo: programador .NET y responsable del CI/CD de varias aplicaciones (Azure DevOps y GitHub Actions); también gestiono su base de datos SQL Server y sus servicios de Azure (App Service, Key Vault), he desarrollado un chatbot de IA generativa con RAG y hago algo de Android y web.
 - 🎓 Último curso: [Claude Code in Action](https://verify.skilljar.com/c/fmhryo5fni98) (Anthropic, agosto de 2026).
 - 🌱 Aprendiendo ahora mismo: GitOps con Argo CD y Jenkins Configuration as Code, aplicándolo en proyectos personales.
 - 🤔 Me interesa profundizar en: arquitectura de aplicaciones, herramientas IA, testing y buenas prácticas.

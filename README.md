@@ -134,6 +134,10 @@ flowchart LR
 
 ## 🔒 Security across my repositories (DevSecOps)
 
+[![Security KPIs of my repositories](https://raw.githubusercontent.com/antonicr1986/security-dashboard/main/data/summary-card.en.svg)](https://github.com/antonicr1986/security-dashboard/blob/main/REPORT.md)
+
+<sub>Live figures from my [security-dashboard](https://github.com/antonicr1986/security-dashboard): a weekly GitHub Actions job reads the alerts and workflows of every repo and applies a quality gate. Click the card for the full report.</sub>
+
 > **Detecting and preventing are different layers, and both are needed.**
 
 | Layer | Tool | When it acts |
@@ -322,6 +326,10 @@ flowchart LR
 > Cuatro modelos de entrega distintos: uno publica una imagen de contenedor y despliega la API sobre Azure App Service; otro publica un ejecutable versionado listo para descargar; otro publica un sitio web, y solo si los controles previos pasan; y el último deja un APK instalable en cada ejecución. El pipeline se adapta a lo que hay que entregar.
 
 ## 🔒 Seguridad en mis repositorios (DevSecOps)
+
+[![KPIs de seguridad de mis repositorios](https://raw.githubusercontent.com/antonicr1986/security-dashboard/main/data/summary-card.es.svg)](https://github.com/antonicr1986/security-dashboard/blob/main/REPORT.md)
+
+<sub>Cifras reales de mi [security-dashboard](https://github.com/antonicr1986/security-dashboard): un job semanal de GitHub Actions lee las alertas y los workflows de cada repo y aplica un quality gate. Pulsa la tarjeta para ver el informe completo.</sub>
 
 > **Detectar y prevenir son capas distintas, y hacen falta las dos.**
 

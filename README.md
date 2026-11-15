@@ -191,31 +191,22 @@ flowchart LR
 <summary><b>How I apply it: secrets, dependencies and from pipeline to production</b></summary>
 
 ### 🔑 Secrets
-
-- **Custom rules.** They extend gitleaks' defaults, which catch keys from well-known providers but not a password inside a connection string — the shape a leak takes in a .NET project.
-- **Audited history.** It surfaced real credentials from 2023 and 2024. They are revoked, and each is recorded in `.gitleaksignore` with what it was and what was done, because a pipeline that stays red stops being read.
-- **CI detects, the hook prevents.** By the time the workflow fails, the commit is already published; the local `pre-commit` hook blocks it before it exists.
-- **Verified tools.** In the API's pipeline, gitleaks is installed at a pinned version and its SHA-256 is checked before it runs.
-- **No secrets from the first commit.** The Telegram bot never had its token in the code: it reads it from an environment variable.
+- **Custom gitleaks rules** to catch passwords inside .NET connection strings, which the defaults miss
+- **Audited history**: real 2023-2024 credentials found, revoked and documented in `.gitleaksignore`
+- **CI detects, the `pre-commit` hook prevents**: a leak is blocked before the commit exists
 
 ### 📦 Dependencies
-
-- **Each ecosystem with its own tool**, transitive dependencies included: .NET and npm with theirs; on Android, since Gradle has no equivalent, the CI submits the dependency graph to GitHub and a review blocks pull requests that introduce a vulnerable one.
-- **Trivy on the API image.** It also covers the base OS libraries, which no .NET tool sees. With a high or critical vulnerability that has a fix, the image is not published.
-- **Dependabot, without the noise.** A single monthly pull request with minor and patch updates, for packages and workflow actions. Major versions are ignored on purpose: they can break the code, and that deserves a decision, not one more PR.
+- **One tool per ecosystem**, transitive dependencies included (.NET, npm and Gradle via dependency review)
+- **Trivy on the image** also covers the base OS libraries: with a fixable high/critical, it is not published
+- **Dependabot without noise**: one monthly PR; major versions left out on purpose
 
 ### 🚦 From pipeline to production
-
-- **Nothing reaches production without passing every check.** The API deployment waits for the tests, the secret scan, the image scan and the infrastructure scan: if one fails, nothing is deployed.
-- **The infrastructure is scanned too.** Trivy reviews the Terraform before every deployment and blocks high or critical findings. Exceptions are deliberate decisions (for instance, what the free tier does not allow) and are documented with their reason in `.trivyignore`.
-- **DAST that blocks.** Before deploying, the pipeline starts a throwaway API and SQL Server, signs in and OWASP ZAP attacks every endpoint from the Swagger spec: if it finds anything new, nothing is deployed. Afterwards, ZAP passively reviews the published API and web app. Accepted risks are documented with their reason in `.zap/rules.tsv`, and reports are kept as artifacts rather than issues, because the repos are public.
-- **Security headers** on the API and the web app (CSP, HSTS, anti-clickjacking, `nosniff`...), added from the ZAP reports.
-- **Watching production.** Application Insights collects the API's requests, errors and logs, and Azure Monitor sends an email on 5xx errors or 401/403 spikes, the footprint of a brute-force attack. All defined in Terraform.
-- **Rotatable credentials.** The SQL admin password is a Terraform *write-only* argument: rotating it means bumping a version number, and it never reaches the state. On AWS, the RDS password and the JWT key work the same way, and the ECS role can read only those two parameters.
-- **Least privilege.** The `GITHUB_TOKEN` is read-only by default and each job asks only for what it needs. Azure is reached via OIDC, with no passwords stored in GitHub, and the API has its own managed identity, whose only permission is reading secrets from its Key Vault. On AWS I sign in through IAM Identity Center with MFA: 1-hour credentials and no access keys stored on any machine.
-- **Signed image with its SBOM.** After publishing, Syft generates the image's SBOM and cosign signs the image and attaches the SBOM as a signed attestation. Signing is *keyless*, with the workflow's OIDC identity: there is no key to store or leak, and `cosign verify` proves the image was built by my pipeline on `master`.
-- **Protected main branch and a private channel for flaws.** Rulesets on the main branch of my public repos, and a `SECURITY.md` with private vulnerability reporting enabled, so a flaw can be reported without making it public.
-- **Bounded pipelines.** Only one production deployment at a time (`concurrency`) and a time limit per job, so a stuck one does not burn minutes for hours.
+- **Every check must pass** (tests, secrets, image and IaC) or nothing is deployed
+- **Blocking DAST**: ZAP attacks a throwaway API before deploying; accepted risks documented in `.zap/rules.tsv`
+- **Least privilege**: read-only `GITHUB_TOKEN`, OIDC to Azure, managed identity and SSO + MFA on AWS
+- **Rotatable secrets**: Terraform *write-only* values that never reach the state
+- **Signed image** with cosign keyless + SBOM, verifiable with `cosign verify`
+- **Production monitored**: security headers and Azure Monitor alerts on 5xx and 401/403 spikes
 
 </details>
 
@@ -423,31 +414,22 @@ flowchart LR
 <summary><b>Cómo lo aplico: secretos, dependencias y del pipeline a producción</b></summary>
 
 ### 🔑 Secretos
-
-- **Reglas propias.** Extienden las de gitleaks: las de serie detectan claves de proveedores conocidos, pero no una contraseña dentro de una cadena de conexión, que es la forma que toma una fuga en un proyecto .NET.
-- **Historial auditado.** Aparecieron credenciales reales de 2023 y 2024. Están revocadas y cada una queda registrada en `.gitleaksignore` con qué era y qué se hizo, porque un pipeline siempre en rojo deja de leerse.
-- **El CI detecta, el hook previene.** Cuando el workflow falla, el commit ya está publicado; el `pre-commit` local lo bloquea antes de que llegue a existir.
-- **Herramientas verificadas.** En el pipeline de la API, gitleaks se instala con una versión fijada y se comprueba su SHA-256 antes de ejecutarlo.
-- **Sin secretos desde el primer commit.** El bot de Telegram nunca tuvo el token en el código: lo lee de una variable de entorno.
+- **Reglas propias de gitleaks** para detectar contraseñas en cadenas de conexión .NET, que las de serie no ven
+- **Historial auditado**: credenciales reales de 2023-2024 encontradas, revocadas y documentadas en `.gitleaksignore`
+- **El CI detecta, el hook `pre-commit` previene**: la fuga se bloquea antes de que exista el commit
 
 ### 📦 Dependencias
-
-- **Cada ecosistema con su herramienta**, también para dependencias transitivas: .NET y npm con las suyas; en Android, como Gradle no trae un equivalente, el CI envía el grafo de dependencias a GitHub y una revisión bloquea las pull requests que introducen una vulnerable.
-- **Trivy en la imagen de la API.** Revisa también las librerías del sistema operativo base, que ninguna herramienta de .NET ve. Con una vulnerabilidad alta o crítica que tenga parche, la imagen no se publica.
-- **Dependabot, sin ruido.** Una única pull request mensual con las actualizaciones menores y de parche, de paquetes y de acciones. Las versiones mayores se ignoran a propósito: pueden romper el código, y eso merece una decisión, no una PR más.
+- **Cada ecosistema con su herramienta**, también transitivas (.NET, npm y Gradle con *dependency review*)
+- **Trivy en la imagen** revisa también las librerías del SO base: con una alta/crítica con parche, no se publica
+- **Dependabot sin ruido**: una PR mensual; las versiones mayores se excluyen a propósito
 
 ### 🚦 Del pipeline a producción
-
-- **Nada llega a producción sin pasar todos los controles.** El despliegue de la API espera a los tests, al escaneo de secretos, al de la imagen y al de la infraestructura: si uno falla, no se despliega.
-- **La infraestructura también se escanea.** Trivy revisa el Terraform antes de cada despliegue y bloquea los hallazgos altos o críticos. Las excepciones son decisiones conscientes (por ejemplo, lo que el plan gratuito no permite) y quedan documentadas con su motivo en `.trivyignore`.
-- **DAST que bloquea.** Antes de desplegar, el pipeline levanta la API y un SQL Server desechables, inicia sesión y OWASP ZAP ataca todos los endpoints a partir del Swagger: si encuentra algo nuevo, no se despliega. Después, ZAP revisa de forma pasiva la API y la web ya publicadas. Los riesgos aceptados están documentados con su motivo en `.zap/rules.tsv`, y los informes quedan como artefactos y no como issues, porque los repos son públicos.
-- **Cabeceras de seguridad** en la API y la web (CSP, HSTS, anti-clickjacking, `nosniff`...), añadidas a partir de los informes de ZAP.
-- **Vigilancia en producción.** Application Insights recoge peticiones, errores y logs de la API, y Azure Monitor avisa por email ante errores 5xx o picos de 401/403, la huella de un ataque de fuerza bruta. Todo definido en Terraform.
-- **Credenciales que se rotan.** La contraseña del administrador SQL es un argumento *write-only* de Terraform: rotarla es subir un número de versión, sin que llegue nunca al estado. En AWS, la contraseña de RDS y la clave JWT funcionan igual, y el rol de ECS solo puede leer esos dos parámetros.
-- **Mínimo privilegio.** El `GITHUB_TOKEN` es de solo lectura por defecto y cada job pide solo lo que necesita. Azure se alcanza por OIDC, sin contraseñas guardadas en GitHub, y la API tiene su propia identidad administrada, cuyo único permiso es leer los secretos de su Key Vault. En AWS entro por IAM Identity Center con MFA: credenciales de 1 hora y ninguna clave de acceso guardada en ningún equipo.
-- **Imagen firmada y con su SBOM.** Tras publicarla, Syft genera el SBOM de la imagen y cosign firma la imagen y le adjunta el SBOM como attestation firmada. La firma es *keyless*, con la identidad OIDC del workflow: no hay clave que guardar ni que se pueda filtrar, y `cosign verify` demuestra que la imagen la construyó mi pipeline en `master`.
-- **Rama principal protegida y un canal privado para fallos.** Rulesets en la rama principal de mis repos públicos y un `SECURITY.md` con el reporte privado de vulnerabilidades activado, para que un fallo se pueda avisar sin hacerlo público.
-- **Pipelines acotados.** Un solo despliegue a producción a la vez (`concurrency`) y un tiempo máximo por job, para que uno colgado no consuma minutos durante horas.
+- **Tienen que pasar todos los controles** (tests, secretos, imagen e IaC) o no se despliega
+- **DAST que bloquea**: ZAP ataca una API desechable antes de desplegar; riesgos aceptados en `.zap/rules.tsv`
+- **Mínimo privilegio**: `GITHUB_TOKEN` de solo lectura, OIDC a Azure, identidad administrada y SSO + MFA en AWS
+- **Secretos rotables**: valores *write-only* de Terraform que nunca llegan al estado
+- **Imagen firmada** con cosign keyless + SBOM, verificable con `cosign verify`
+- **Producción vigilada**: cabeceras de seguridad y alertas de Azure Monitor ante 5xx y picos de 401/403
 
 </details>
 

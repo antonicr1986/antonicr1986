@@ -9,20 +9,22 @@
 
 [![Interactive CV](https://img.shields.io/badge/Interactive%20CV-antonio--cv-10B981?style=for-the-badge&logo=vercel&logoColor=white)](https://antonio-cv-five.vercel.app/?lang=en) [![LinkedIn](https://img.shields.io/badge/LinkedIn-antoniocompany-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/antoniocompany/?locale=en-US)
 
-## 🛠️ DevOps & Infrastructure
-- Git / GitHub — version control
+## ⚙️ CI/CD & DevOps
+- Git / GitHub — version control; migrated repos from TFS 2018 to Git
 - GitHub Actions — CI/CD on Linux and Windows runners
-- Azure DevOps — Repos (automatic mirror from GitHub), Boards, Pipelines and Wiki
-- Docker and container registries (GHCR) — applied in personal projects
-- Automated artifact publishing and versioned Releases
-- Pipeline-gated deployments (Vercel) — shipping depends on the checks passing, not on the push
-- DevSecOps — scanning of secrets (gitleaks), dependencies, the Docker image and the infrastructure (Trivy) before deploying, signed images with their SBOM (cosign + Syft), SAST with CodeQL and DAST with OWASP ZAP that blocks the deployment; least privilege in every pipeline
-- Observability — Azure Monitor / Application Insights with OpenTelemetry, and email alerts on 5xx errors and 401/403 spikes
-- Terraform — Azure infrastructure as code: imported existing resources, remote state in Azure Storage, security scanning of the configuration and an automatic `plan` on every PR via OIDC
-- Azure Key Vault — production secrets read by the API through its managed identity, with RBAC and least privilege; the values never reach the Terraform state
-- Multicloud (Azure + AWS) — the same API image also runs on AWS (ECS Express Mode + RDS SQL Server), with its own Terraform and remote state in S3: brought up with one command running exactly the `sha-<commit>` image that is in production on Azure (never `:latest`) and torn down with another (~20 min each), secrets as write-only values in SSM Parameter Store, Terraform and scripts tested in CI, and the design recorded in an ADR
-- Jenkins — declarative pipelines (Jenkinsfile) with a controller and a Linux agent on Docker Compose, JUnit tests, artifacts, parameters and credentials
-- Kubernetes and Helm — my own chart to deploy the API to any cluster, validated in CI on every PR: replicas and zero-downtime updates, startup/liveness/readiness probes, SQL Server as a StatefulSet with a persistent volume, and Ingress with Traefik
+- Azure DevOps — Repos (mirrored from GitHub), Boards, Pipelines and Wiki
+- Jenkins — declarative Jenkinsfile, Linux agent on Docker Compose, JUnit
+- Versioned Releases and automated artifacts
+- Pipeline-gated deployments: shipped only when every check passes
+- 🔒 DevSecOps — gitleaks, CodeQL, Trivy, OWASP ZAP, cosign + Syft and least privilege with OIDC ([details](#-security-across-my-repositories-devsecops))
+
+## ☁️ Cloud & Infrastructure
+- Docker and GHCR — images tagged by commit
+- Terraform — Azure and AWS, remote state and a `plan` on every PR
+- Azure — App Service, Azure SQL and Key Vault with managed identity
+- AWS — ECS Express Mode + RDS, brought up on demand (multicloud)
+- Kubernetes and Helm — my own chart, validated in CI
+- Observability — Application Insights (OpenTelemetry) and Azure Monitor alerts
 
 ## 💻 Development
 - C# / VB.NET · .NET Framework / .NET 8
@@ -207,21 +209,22 @@ Desarrollador .NET con experiencia en DevOps y DevSecOps. En el trabajo llevo el
 
 [![CV web](https://img.shields.io/badge/CV_web-antonio--cv-10B981?style=for-the-badge&logo=vercel&logoColor=white)](https://antonio-cv-five.vercel.app/?lang=es) [![LinkedIn](https://img.shields.io/badge/LinkedIn-antoniocompany-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/antoniocompany/?locale=es_ES)
 
-## 🛠️ DevOps & Infraestructura
-- Git / GitHub — control de versiones
+## ⚙️ CI/CD y DevOps
+- Git / GitHub — control de versiones; migración de repos de TFS 2018 a Git
 - GitHub Actions — CI/CD sobre runners Linux y Windows
-- Azure DevOps — Repos (espejo automático desde GitHub), Boards, Pipelines y Documentación (wiki)
-- Docker y registros de imágenes (GHCR) — aplicado en proyectos personales
-- Publicación automatizada de artefactos y Releases versionadas
-- Despliegue controlado desde el pipeline (Vercel) — la publicación depende de que los controles pasen, no del push
-- DevSecOps — escaneo de secretos (gitleaks), de dependencias, de la imagen Docker y de la infraestructura (Trivy) antes de desplegar, imágenes firmadas con su SBOM (cosign + Syft), SAST con CodeQL y DAST con OWASP ZAP que bloquea el despliegue; permisos mínimos en todos los pipelines
-- Observabilidad — Azure Monitor / Application Insights con OpenTelemetry, y alertas por email ante errores 5xx y picos de 401/403
-- Terraform — infraestructura de Azure como código: import de recursos existentes, estado remoto en Azure Storage, escaneo de seguridad de la configuración y `plan` automático en cada PR con OIDC
-- Azure Key Vault — secretos de producción que la API lee con su identidad administrada, con RBAC y mínimo privilegio; los valores nunca llegan al estado de Terraform
-- Multicloud (Azure + AWS) — la misma imagen de la API corre también en AWS (ECS Express Mode + RDS SQL Server), con su propio Terraform y estado remoto en S3: se levanta con un comando ejecutando exactamente la imagen `sha-<commit>` que está en producción en Azure (nunca `:latest`) y se apaga con otro (~20 min cada uno), secretos write-only en SSM Parameter Store, Terraform y scripts probados en el CI y el diseño recogido en un ADR
-- Jenkins — pipelines declarativos (Jenkinsfile) con controller y agente Linux en Docker Compose, tests JUnit, artefactos, parámetros y credenciales
-- Kubernetes y Helm — chart propio para desplegar la API en cualquier clúster, validado en el CI en cada PR: réplicas y actualizaciones sin corte, sondas startup/liveness/readiness, SQL Server en StatefulSet con volumen persistente e Ingress con Traefik
+- Azure DevOps — Repos (espejo desde GitHub), Boards, Pipelines y Wiki
+- Jenkins — Jenkinsfile declarativo, agente Linux en Docker Compose, JUnit
+- Releases versionadas y artefactos automáticos
+- Despliegues controlados por el pipeline: solo si pasan todos los controles
+- 🔒 DevSecOps — gitleaks, CodeQL, Trivy, OWASP ZAP, cosign + Syft y mínimo privilegio con OIDC ([ver detalle](#-seguridad-en-mis-repositorios-devsecops))
 
+## ☁️ Cloud e Infraestructura
+- Docker y GHCR — imágenes etiquetadas por commit
+- Terraform — Azure y AWS, estado remoto y `plan` en cada PR
+- Azure — App Service, Azure SQL y Key Vault con identidad administrada
+- AWS — ECS Express Mode + RDS, levantado bajo demanda (multicloud)
+- Kubernetes y Helm — chart propio validado en CI
+- Observabilidad — Application Insights (OpenTelemetry) y alertas en Azure Monitor
 
 ## 💻 Desarrollo
 - C# / VB.NET · .NET Framework / .NET 8

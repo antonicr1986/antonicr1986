@@ -152,6 +152,7 @@ flowchart LR
 | 🏗️ Infrastructure as code | **Trivy** (`trivy config`) | Before deploying |
 | 🌐 Running application (DAST) | **OWASP ZAP**: active and authenticated in a throwaway environment · passive in production | Before deploying the API (blocks) and after every deployment |
 | 🗝️ Production secrets | **Azure Key Vault** · managed identity · **AWS SSM** (write-only) | Always: the API reads them at startup |
+| 👤 Cloud access | **AWS IAM Identity Center** (SSO) · MFA | When running Terraform: 1-hour credentials, no long-lived access keys |
 | 🔐 Least privilege | read-only `GITHUB_TOKEN` · **OIDC** | In every workflow |
 | 🌿 Main branch protection | GitHub **rulesets** | On the main branch of my public repos |
 | 📬 Vulnerability reporting | `SECURITY.md` · *private vulnerability reporting* | In my public repos |
@@ -179,7 +180,7 @@ flowchart LR
 - **Security headers** on the API and the web app (CSP, HSTS, anti-clickjacking, `nosniff`...), added from the ZAP reports.
 - **Watching production.** Application Insights collects the API's requests, errors and logs, and Azure Monitor sends an email on 5xx errors or 401/403 spikes, the footprint of a brute-force attack. All defined in Terraform.
 - **Rotatable credentials.** The SQL admin password is a Terraform *write-only* argument: rotating it means bumping a version number, and it never reaches the state. On AWS, the RDS password and the JWT key work the same way, and the ECS role can read only those two parameters.
-- **Least privilege.** The `GITHUB_TOKEN` is read-only by default and each job asks only for what it needs. Azure is reached via OIDC, with no passwords stored in GitHub, and the API has its own managed identity, whose only permission is reading secrets from its Key Vault.
+- **Least privilege.** The `GITHUB_TOKEN` is read-only by default and each job asks only for what it needs. Azure is reached via OIDC, with no passwords stored in GitHub, and the API has its own managed identity, whose only permission is reading secrets from its Key Vault. On AWS I sign in through IAM Identity Center with MFA: 1-hour credentials and no access keys stored on any machine.
 - **Signed image with its SBOM.** After publishing, Syft generates the image's SBOM and cosign signs the image and attaches the SBOM as a signed attestation. Signing is *keyless*, with the workflow's OIDC identity: there is no key to store or leak, and `cosign verify` proves the image was built by my pipeline on `master`.
 - **Protected main branch and a private channel for flaws.** Rulesets on the main branch of my public repos, and a `SECURITY.md` with private vulnerability reporting enabled, so a flaw can be reported without making it public.
 - **Bounded pipelines.** Only one production deployment at a time (`concurrency`) and a time limit per job, so a stuck one does not burn minutes for hours.
@@ -350,6 +351,7 @@ flowchart LR
 | 🏗️ Infraestructura como código | **Trivy** (`trivy config`) | Antes de desplegar |
 | 🌐 Aplicación en marcha (DAST) | **OWASP ZAP**: activo y autenticado en un entorno desechable · pasivo en producción | Antes de desplegar la API (bloquea) y después de cada despliegue |
 | 🗝️ Secretos en producción | **Azure Key Vault** · identidad administrada · **AWS SSM** (write-only) | Siempre: la API los lee al arrancar |
+| 👤 Acceso a la nube | **AWS IAM Identity Center** (SSO) · MFA | Al lanzar Terraform: credenciales de 1 hora, sin claves de acceso fijas |
 | 🔐 Mínimo privilegio | `GITHUB_TOKEN` de solo lectura · **OIDC** | En todos los workflows |
 | 🌿 Protección de la rama principal | **Rulesets** de GitHub | En la rama principal de mis repos públicos |
 | 📬 Reporte de vulnerabilidades | `SECURITY.md` · *private vulnerability reporting* | En mis repos públicos |
@@ -377,7 +379,7 @@ flowchart LR
 - **Cabeceras de seguridad** en la API y la web (CSP, HSTS, anti-clickjacking, `nosniff`...), añadidas a partir de los informes de ZAP.
 - **Vigilancia en producción.** Application Insights recoge peticiones, errores y logs de la API, y Azure Monitor avisa por email ante errores 5xx o picos de 401/403, la huella de un ataque de fuerza bruta. Todo definido en Terraform.
 - **Credenciales que se rotan.** La contraseña del administrador SQL es un argumento *write-only* de Terraform: rotarla es subir un número de versión, sin que llegue nunca al estado. En AWS, la contraseña de RDS y la clave JWT funcionan igual, y el rol de ECS solo puede leer esos dos parámetros.
-- **Mínimo privilegio.** El `GITHUB_TOKEN` es de solo lectura por defecto y cada job pide solo lo que necesita. Azure se alcanza por OIDC, sin contraseñas guardadas en GitHub, y la API tiene su propia identidad administrada, cuyo único permiso es leer los secretos de su Key Vault.
+- **Mínimo privilegio.** El `GITHUB_TOKEN` es de solo lectura por defecto y cada job pide solo lo que necesita. Azure se alcanza por OIDC, sin contraseñas guardadas en GitHub, y la API tiene su propia identidad administrada, cuyo único permiso es leer los secretos de su Key Vault. En AWS entro por IAM Identity Center con MFA: credenciales de 1 hora y ninguna clave de acceso guardada en ningún equipo.
 - **Imagen firmada y con su SBOM.** Tras publicarla, Syft genera el SBOM de la imagen y cosign firma la imagen y le adjunta el SBOM como attestation firmada. La firma es *keyless*, con la identidad OIDC del workflow: no hay clave que guardar ni que se pueda filtrar, y `cosign verify` demuestra que la imagen la construyó mi pipeline en `master`.
 - **Rama principal protegida y un canal privado para fallos.** Rulesets en la rama principal de mis repos públicos y un `SECURITY.md` con el reporte privado de vulnerabilidades activado, para que un fallo se pueda avisar sin hacerlo público.
 - **Pipelines acotados.** Un solo despliegue a producción a la vez (`concurrency`) y un tiempo máximo por job, para que uno colgado no consuma minutos durante horas.

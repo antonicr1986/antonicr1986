@@ -50,7 +50,7 @@
 
 Use the **demo account** button or `demo@financetracker.app` / `Demo1234!`. The database is serverless and pauses when idle: all three apps wake it as soon as the sign-in screen opens, so the wait happens while you read it.
 
-A complete personal finance system: a REST API and three clients consuming it from different platforms. Writing several consumers is what turns an API into a contract: the same endpoints, the same error codes and the same business rules, reached from another language and another platform. The three clients share a corporate look, light/dark theme, Spanish/English and the same demo account, one click away.
+A REST API and three clients on different platforms: the same endpoints, error codes and business rules reached from three languages, which is what turns the API into a contract. Shared look, light/dark theme, Spanish/English and one demo account.
 
 ```mermaid
 flowchart LR
@@ -87,52 +87,79 @@ flowchart LR
     GHCR -. Helm .-> K8S[Kubernetes · Helm chart validated in CI]
 ```
 
-- 🔗 [financetracker-web](https://github.com/antonicr1986/financetracker-web) — Web interface for FinanceTracker, built with Next.js 16, TypeScript and Tailwind CSS: sign-up, sign-in and **sign-in with Google** (Google Identity Services), transaction entry, filtering by type, category and text, a dashboard with charts built without external libraries, a light/dark theme and a fully bilingual interface (Spanish/English). One click gets you in with the demo account, no sign-up needed. Deployment is triggered by **the pipeline itself**, and only once secret scanning and the build are green. After every deployment, **OWASP ZAP** scans the published site (DAST). **[Open the live app](https://financetracker-web-tau.vercel.app/login)**
+- 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — REST API in .NET 8 (JWT, sign-in with Google) used by all three clients.
+  - **CI/CD**: Docker image per commit in GHCR, signed with cosign + SBOM, deployed to Azure App Service without rebuilding
+  - **Security**: deploys only if tests, secrets, Trivy and OWASP ZAP pass; secrets in Key Vault via managed identity
+  - **IaC and multicloud**: Terraform on Azure and AWS (ECS + RDS on demand), `plan` on every PR via OIDC
+  - **Kubernetes and observability**: Helm chart validated in CI · Application Insights with alerts
+
+  **[Browse the API in Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)**
+
+[![CI FinanceTracker](https://img.shields.io/github/actions/workflow/status/antonicr1986/FinanceTracker/ci.yml?style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/FinanceTracker/actions)
+
+- 🔗 [financetracker-web](https://github.com/antonicr1986/financetracker-web) — Web client in Next.js 16, TypeScript and Tailwind CSS.
+  - Sign-in with Google, filters, dashboard with charts, light/dark and Spanish/English
+  - Deployed to Vercel by the pipeline itself, only with the secret scan and build green
+  - OWASP ZAP scans the live site after every deployment
+
+  **[Open the live app](https://financetracker-web-tau.vercel.app/login)**
 
 [![CI financetracker-web](https://img.shields.io/github/actions/workflow/status/antonicr1986/financetracker-web/ci.yml?branch=main&style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/financetracker-web/actions)
 [![Demo](https://img.shields.io/badge/demo-online-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://financetracker-web-tau.vercel.app/login)
 
-- 🔗 [financetracker-android](https://github.com/antonicr1986/financetracker-android) — Android client for FinanceTracker in Kotlin: the **second consumer of the same API**, which is what turns it into a contract — same endpoints, same error codes and same business rules from a different platform. Sign-up, sign-in and **sign-in with Google** (Credential Manager, with the ID token validated by the API), a month selector, totals, creating, editing and deleting transactions and the same look as the web app: a shared corporate palette, light/dark theme and Spanish/English from the top bar, switching without flashing. One tap gets you in with the demo account. The pipeline scans for secrets, runs the unit tests —and **fails if none ran**— and leaves a **downloadable APK** on every run. Tagging a version publishes a **Release with the signed APK**. **[Download the latest APK](https://github.com/antonicr1986/financetracker-android/releases/latest/download/financetracker.apk)**: one click, Android 7.0 or later.
+- 🔗 [financetracker-android](https://github.com/antonicr1986/financetracker-android) — Android client in Kotlin.
+  - Sign-in with Google (Credential Manager), transactions, budgets and the same look as the web app
+  - CI with secret scanning, MobSF and unit tests that fail if none ran
+  - Downloadable APK on every run and a signed Release on every tag
+
+  **[Download the latest APK](https://github.com/antonicr1986/financetracker-android/releases/latest/download/financetracker.apk)** · Android 7.0+
 
 [![CI financetracker-android](https://img.shields.io/github/actions/workflow/status/antonicr1986/financetracker-android/ci.yml?branch=main&style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/financetracker-android/actions)
 [![APK](https://img.shields.io/badge/Download_APK-Android_7.0%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/antonicr1986/financetracker-android/releases/latest/download/financetracker.apk)
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
 
-- 🔗 [financetracker-desktop](https://github.com/antonicr1986/financetracker-desktop) — **Desktop client** for Windows in WPF and .NET 8, with **MVVM** (CommunityToolkit.Mvvm): C# on both ends of the system. Transactions, budgets, categories, registration, **sign-in with Google** through the system browser —with the client secret injected at build time from a GitHub secret, never stored in the repo— and a saved session encrypted with Windows' **DPAPI**. Over 150 tests on the ViewModels and the HTTP client, with no windows and no network. The pipeline runs on a Windows runner and, when a version is tagged, publishes a **Release with the self-contained app** (a `.zip` and an `.exe`) with nothing to install, and builds the **MSIX** package for the Microsoft Store. **[Available on the Microsoft Store](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=en-us)**: one-click install, no SmartScreen warnings.
+- 🔗 [financetracker-desktop](https://github.com/antonicr1986/financetracker-desktop) — Windows client in WPF and .NET 8 with MVVM.
+  - Sign-in with Google, session encrypted with DPAPI and 150+ tests with no UI or network
+  - Windows runner: self-contained Release (`.zip` / `.exe`) on every tag
+  - MSIX package published on the Microsoft Store
+
+  **[Available on the Microsoft Store](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=en-us)**
 
 [![CI financetracker-desktop](https://img.shields.io/github/actions/workflow/status/antonicr1986/financetracker-desktop/ci.yml?branch=main&style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/financetracker-desktop/actions)
 [![Release](https://img.shields.io/github/v/release/antonicr1986/financetracker-desktop?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonicr1986/financetracker-desktop/releases/latest)
 [![Microsoft Store](https://img.shields.io/badge/Microsoft_Store-Available-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=en-us)
 
-- 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — REST API in .NET 8 with a layered architecture, JWT authentication, **sign-in with Google** for all three clients (the Google ID token is validated against Google and the account is linked by verified email) and automated tests. Dockerised (API + SQL Server) and backed by a pipeline that builds, runs the tests and **publishes the image to GitHub Container Registry**, tagged by commit so any specific version can be deployed or rolled back, **signed with cosign** (keyless) and with its **SBOM** (Syft) attached, so anyone can verify where it came from. In production, **Azure App Service runs that very same image** —the one that passed the scan— against Azure SQL, deployed from the pipeline itself without rebuilding. It is only deployed if **every** check passes —tests, secrets, image and infrastructure—, and before deploying **OWASP ZAP** attacks every endpoint in a throwaway environment. The Azure infrastructure is described with **Terraform** and scanned with **Trivy** before every deployment: every pull request gets an automatic `plan`, signing in to Azure via **OIDC** —no passwords stored in GitHub— with a read-only identity. The connection string and the JWT key live in **Key Vault**, and the API reads them at startup through its **managed identity**: its configuration holds only references, not passwords. The **same image** also runs on **AWS** (ECS Express Mode on Fargate + RDS SQL Server), with its own **Terraform** and remote state in S3: the whole environment comes up with one script (`up.ps1`), which reads from Azure the exact `sha-<commit>` image running in production —never `:latest`— and the JWT key, and goes away with another (`down.ps1`), about 20 minutes each, so it only costs while it is in use. The database password and the JWT key are *write-only* values in **SSM Parameter Store** and never reach the state, the AWS Terraform is scanned by Trivy like Azure's and tested on every push (`terraform test` with a mocked provider and **Pester** on Windows PowerShell 5.1), and the design —one Terraform per cloud with a shared contract— is recorded in an **ADR**. In production, **Application Insights** (OpenTelemetry) collects requests, errors and logs, and Azure Monitor emails me on 5xx errors or 401/403 spikes. The same image is also ready for **Kubernetes** with my own **Helm chart**: 2 replicas with zero-downtime updates, startup, liveness and readiness probes, an *initContainer* that waits for the database, SQL Server as a StatefulSet with a persistent volume, and Ingress with Traefik; the pipeline validates the chart on every pull request. **[Browse the API in Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)** — with serverless SQL, the first request after a while idle takes a few seconds.
-
-[![CI FinanceTracker](https://img.shields.io/github/actions/workflow/status/antonicr1986/FinanceTracker/ci.yml?style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/FinanceTracker/actions)
-
 ### Other projects
 
-- 🧰 **ai-project-kit** *(private repo · [download it from my CV](https://antonio-cv-five.vercel.app/?lang=en))* — A kit that prepares any project to be developed safely with AI assistants: rules for the AI (`CLAUDE.md`, `AGENTS.md`), a workflow of skills —`/backlog` → `/story` → `/pair` → `/code-review`: short stories, tests first, and the AI never commits or pushes— and CI templates for GitHub Actions and Azure DevOps with Gitleaks, actions pinned by SHA, least privilege and tools whose SHA-256 is verified. A PowerShell installer (double click or Explorer right-click) detects whether the project is new or existing and updates it without overwriting customisations. Automatic releases from Conventional Commits, 8 ADRs and 113 Pester tests, end-to-end tests of the template included. FinanceTracker itself is built with it.
+- 🧰 **ai-project-kit** *(private repo · [download it from my CV](https://antonio-cv-five.vercel.app/?lang=en))* — Kit to develop any project safely with AI assistants.
+  - Rules for the AI (`CLAUDE.md`, `AGENTS.md`) and skills `/backlog` → `/story` → `/pair` → `/code-review`: tests first, the AI never commits
+  - CI templates for GitHub Actions and Azure DevOps with Gitleaks and least privilege
+  - PowerShell installer, automatic releases, 8 ADRs and 113 Pester tests
 
 ![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=gnometerminal&logoColor=white)
 ![Claude Code](https://img.shields.io/badge/Claude_Code-D97757?style=for-the-badge&logo=claude&logoColor=white)
 
-- 📄 **antonio-cv** *(private repo · [open it](https://antonio-cv-five.vercel.app/?lang=en))* — My interactive CV in Next.js 16, React 19, TypeScript and Tailwind CSS 4: bilingual, light/dark and printable to PDF. It includes an **AI chat** (OpenAI) that answers questions about my profile, hardened like any public API: burst, hourly and daily rate limits, same-origin JSON only and links restricted to known URLs. The pipeline scans the history with gitleaks and runs lint, `npm audit`, tests and the build; only with all of that green does it deploy to Vercel, followed by a smoke test and an OWASP ZAP scan of the live site. lychee checks every link, and actions are pinned by SHA.
+- 📄 **antonio-cv** *(private repo · [open it](https://antonio-cv-five.vercel.app/?lang=en))* — My interactive CV in Next.js 16 and React 19: bilingual, light/dark and printable to PDF.
+  - AI chat (OpenAI) hardened like a public API: rate limits and same-origin requests only
+  - Deploys to Vercel only with gitleaks, lint, `npm audit`, tests and build green; then smoke test and OWASP ZAP
 
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
 ![OpenAI](https://img.shields.io/badge/AI_chat-412991?style=for-the-badge&logo=openai&logoColor=white)
 
-- 🔧 **Jenkins CI for .NET** *(private repos)* — Jenkins set up with **Docker Compose** the way a company would: a *controller* that only coordinates (0 executors) and a **Linux agent with the .NET 10 SDK** connected over WebSocket. A **declarative Jenkinsfile** versioned in Git restores, builds, runs the tests with **JUnit** results published and archives fingerprinted artifacts. When tests fail, the build goes **UNSTABLE** and nothing is published. It includes build parameters, credentials masked in the logs, cloning the private repo with a read-only token, SCM polling, `timeout` and build rotation. The infrastructure is in Git too: it is reproduced on another machine with a `docker compose up`. Versions are pinned and the .NET SDK is copied from the official image in a multi-stage build. Its own CI runs **Gitleaks**, **Hadolint** and **Trivy** with least privilege and actions pinned by SHA: the first scan found 20 high vulnerabilities, all of them fixed.
+- 🔧 **Jenkins CI for .NET** *(private repos)* — Jenkins on Docker Compose, set up the way a company would.
+  - Controller with 0 executors and a Linux agent with the .NET 10 SDK
+  - Declarative Jenkinsfile: build, JUnit tests and artifacts; if tests fail, nothing is published
+  - Its own CI with Gitleaks, Hadolint and Trivy: 20 high vulnerabilities found and fixed
 
 ![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker_Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-- 🔗 [BlocDeNotas](https://github.com/antonicr1986/BlocDeNotas) — Desktop application in Windows Forms (.NET Framework 4.7.2). Pipeline on a Windows runner using MSBuild and NuGet, with **automatic Release publishing** when a version tag is pushed: it packages the executable, generates the changelog and stamps the version number into the binary itself.
+- 🔗 [BlocDeNotas](https://github.com/antonicr1986/BlocDeNotas) — Windows Forms app (.NET Framework 4.7.2): Windows runner with MSBuild and NuGet, and a Release with changelog and versioned binary on every tag.
 
 [![CI BlocDeNotas](https://img.shields.io/github/actions/workflow/status/antonicr1986/BlocDeNotas/ci.yml?style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/BlocDeNotas/actions)
 [![Release](https://img.shields.io/github/v/release/antonicr1986/BlocDeNotas?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonicr1986/BlocDeNotas/releases/latest)
 
-> Beyond GitHub Actions and Azure DevOps, the same build, test and artifact cycle running on Jenkins with containerised agents.
->
-> Four different delivery models, each where it fits: the API publishes a container image and is deployed to Azure App Service; the web client is published as a site, and only if the preceding checks pass; the two desktop apps publish a versioned executable ready to download; and the Android app leaves an APK on every run and a signed one on every version. The pipeline adapts to whatever has to be delivered.
+> **Four delivery models, each where it fits:** container image (API), gated website (web), versioned executable (desktop) and APK (Android).
 
 ## 🔒 Security across my repositories (DevSecOps)
 
@@ -160,6 +187,9 @@ flowchart LR
 | 📬 Vulnerability reporting | `SECURITY.md` · *private vulnerability reporting* | In my public repos |
 | 🔄 Staying up to date | **Dependabot** | One pull request a month |
 
+<details>
+<summary><b>How I apply it: secrets, dependencies and from pipeline to production</b></summary>
+
 ### 🔑 Secrets
 
 - **Custom rules.** They extend gitleaks' defaults, which catch keys from well-known providers but not a password inside a connection string — the shape a leak takes in a .NET project.
@@ -186,6 +216,8 @@ flowchart LR
 - **Signed image with its SBOM.** After publishing, Syft generates the image's SBOM and cosign signs the image and attaches the SBOM as a signed attestation. Signing is *keyless*, with the workflow's OIDC identity: there is no key to store or leak, and `cosign verify` proves the image was built by my pipeline on `master`.
 - **Protected main branch and a private channel for flaws.** Rulesets on the main branch of my public repos, and a `SECURITY.md` with private vulnerability reporting enabled, so a flaw can be reported without making it public.
 - **Bounded pipelines.** Only one production deployment at a time (`concurrency`) and a time limit per job, so a stuck one does not burn minutes for hours.
+
+</details>
 
 ---
 
@@ -250,7 +282,7 @@ Desarrollador .NET con experiencia en DevOps y DevSecOps. En el trabajo llevo el
 
 Entra con el botón de la **cuenta de demostración** o con `demo@financetracker.app` / `Demo1234!`. La base de datos es serverless y se pausa cuando no se usa: las tres apps la despiertan en cuanto se abre el login, así que la espera ocurre mientras lo lees.
 
-Un sistema de finanzas personales completo: una API REST y tres clientes que la consumen desde plataformas distintas. Escribir varios consumidores es lo que convierte una API en un contrato: los mismos endpoints, los mismos códigos de error y las mismas reglas de negocio, alcanzados desde otro lenguaje y otra plataforma. Los tres clientes comparten estética corporativa, tema claro/oscuro, español/inglés y la misma cuenta de demostración, a un clic.
+Una API REST y tres clientes en plataformas distintas: los mismos endpoints, códigos de error y reglas de negocio desde tres lenguajes, que es lo que convierte la API en un contrato. Estética común, tema claro/oscuro, español/inglés y una cuenta de demostración.
 
 ```mermaid
 flowchart LR
@@ -287,52 +319,79 @@ flowchart LR
     GHCR -. Helm .-> K8S[Kubernetes · chart de Helm validado en CI]
 ```
 
-- 🔗 [financetracker-web](https://github.com/antonicr1986/financetracker-web) — Interfaz web de FinanceTracker en Next.js 16, TypeScript y Tailwind CSS: registro, inicio de sesión e **inicio de sesión con Google** (Google Identity Services), alta de transacciones, filtros por tipo, categoría y texto, dashboard con gráficos sin librerías externas, tema claro/oscuro e interfaz completa en español e inglés. Se entra en un clic con la cuenta de demostración, sin registrarse. El despliegue lo lanza **el propio pipeline**, y solo después de que el escaneo de secretos y la compilación estén en verde. Tras cada despliegue, **OWASP ZAP** analiza la web publicada (DAST). **[Abrir la aplicación](https://financetracker-web-tau.vercel.app/login)**
+- 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8 (JWT, inicio de sesión con Google) que consumen los tres clientes.
+  - **CI/CD**: imagen Docker por commit en GHCR, firmada con cosign + SBOM, desplegada en Azure App Service sin recompilar
+  - **Seguridad**: solo despliega si pasan tests, secretos, Trivy y OWASP ZAP; secretos en Key Vault con identidad administrada
+  - **IaC y multicloud**: Terraform en Azure y AWS (ECS + RDS bajo demanda), `plan` en cada PR con OIDC
+  - **Kubernetes y observabilidad**: chart de Helm validado en CI · Application Insights con alertas
+
+  **[Ver la API en Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)**
+
+[![CI FinanceTracker](https://img.shields.io/github/actions/workflow/status/antonicr1986/FinanceTracker/ci.yml?style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/FinanceTracker/actions)
+
+- 🔗 [financetracker-web](https://github.com/antonicr1986/financetracker-web) — Cliente web en Next.js 16, TypeScript y Tailwind CSS.
+  - Inicio de sesión con Google, filtros, dashboard con gráficos, tema claro/oscuro y español/inglés
+  - Lo despliega en Vercel el propio pipeline, solo con el escaneo de secretos y el build en verde
+  - OWASP ZAP analiza la web publicada tras cada despliegue
+
+  **[Abrir la aplicación](https://financetracker-web-tau.vercel.app/login)**
 
 [![CI financetracker-web](https://img.shields.io/github/actions/workflow/status/antonicr1986/financetracker-web/ci.yml?branch=main&style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/financetracker-web/actions)
 [![Demo](https://img.shields.io/badge/demo-online-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://financetracker-web-tau.vercel.app/login)
 
-- 🔗 [financetracker-android](https://github.com/antonicr1986/financetracker-android) — Cliente Android de FinanceTracker en Kotlin: el **segundo consumidor de la misma API**, que es lo que la convierte en un contrato — mismos endpoints, mismos códigos de error y mismas reglas de negocio desde otra plataforma. Registro, inicio de sesión e **inicio de sesión con Google** (Credential Manager, con el ID token validado en la API), selector de meses, totales, alta, edición y borrado de movimientos, presupuestos mensuales con barra de progreso y la misma estética que la web: paleta corporativa común, tema claro/oscuro y español/inglés desde la barra superior, con cambio sin parpadeo. Se entra en un toque con la cuenta de demostración. El pipeline escanea secretos, ejecuta las pruebas unitarias —y **falla si no se ejecuta ninguna**— y deja el **APK descargable** en cada ejecución. Al etiquetar una versión, publica una **Release con el APK firmado**. **[Descargar el último APK](https://github.com/antonicr1986/financetracker-android/releases/latest/download/financetracker.apk)**: un clic, Android 7.0 o superior.
+- 🔗 [financetracker-android](https://github.com/antonicr1986/financetracker-android) — Cliente Android en Kotlin.
+  - Inicio de sesión con Google (Credential Manager), movimientos, presupuestos y la misma estética que la web
+  - CI con escaneo de secretos, MobSF y pruebas unitarias que fallan si no se ejecuta ninguna
+  - APK descargable en cada ejecución y Release firmada en cada versión
+
+  **[Descargar el último APK](https://github.com/antonicr1986/financetracker-android/releases/latest/download/financetracker.apk)** · Android 7.0+
 
 [![CI financetracker-android](https://img.shields.io/github/actions/workflow/status/antonicr1986/financetracker-android/ci.yml?branch=main&style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/financetracker-android/actions)
 [![APK](https://img.shields.io/badge/Descargar_APK-Android_7.0%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/antonicr1986/financetracker-android/releases/latest/download/financetracker.apk)
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
 
-- 🔗 [financetracker-desktop](https://github.com/antonicr1986/financetracker-desktop) — **Cliente de escritorio** para Windows en WPF y .NET 8, con **MVVM** (CommunityToolkit.Mvvm): C# en los dos extremos del sistema. Movimientos, presupuestos, categorías, registro, **inicio de sesión con Google** desde el navegador del sistema —con el secreto de cliente inyectado al compilar desde un secret de GitHub, nunca guardado en el repo— y la sesión guardada cifrada con **DPAPI** de Windows. Más de 150 pruebas sobre los ViewModels y el cliente HTTP, sin ventanas ni red. El pipeline corre en un runner de Windows y, al etiquetar una versión, publica una **Release con la aplicación autocontenida** (un `.zip` y un `.exe`), sin nada que instalar, y genera el paquete **MSIX** para la Microsoft Store. **[Disponible en Microsoft Store](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=es-es)**: se instala con un clic y sin avisos de SmartScreen.
+- 🔗 [financetracker-desktop](https://github.com/antonicr1986/financetracker-desktop) — Cliente de Windows en WPF y .NET 8 con MVVM.
+  - Inicio de sesión con Google, sesión cifrada con DPAPI y más de 150 pruebas sin ventanas ni red
+  - Runner de Windows: Release autocontenida (`.zip` / `.exe`) en cada versión
+  - Paquete MSIX publicado en la Microsoft Store
+
+  **[Disponible en Microsoft Store](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=es-es)**
 
 [![CI financetracker-desktop](https://img.shields.io/github/actions/workflow/status/antonicr1986/financetracker-desktop/ci.yml?branch=main&style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/financetracker-desktop/actions)
 [![Release](https://img.shields.io/github/v/release/antonicr1986/financetracker-desktop?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/antonicr1986/financetracker-desktop/releases/latest)
 [![Microsoft Store](https://img.shields.io/badge/Microsoft_Store-Disponible-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=es-es)
 
-- 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8 con arquitectura por capas, autenticación JWT, **inicio de sesión con Google** para los tres clientes (el ID token se valida contra Google y la cuenta se vincula por email verificado) y tests automatizados. Dockerizada (API + SQL Server) y con un pipeline que compila, ejecuta los tests y **publica la imagen en GitHub Container Registry**, etiquetada por commit para poder desplegar o revertir cualquier versión concreta, **firmada con cosign** (keyless) y con su **SBOM** (Syft) adjunto, para que cualquiera pueda verificar su origen. En producción, **Azure App Service ejecuta esa misma imagen** —la que ha pasado el escaneo— contra Azure SQL, desplegada desde el propio pipeline sin volver a compilar. Solo se despliega si pasan **todos** los controles —tests, secretos, imagen e infraestructura—, y antes de desplegar **OWASP ZAP** ataca todos sus endpoints en un entorno desechable. La infraestructura de Azure está descrita con **Terraform** y escaneada con **Trivy** antes de cada despliegue: cada pull request muestra un `plan` automático, con acceso a Azure por **OIDC** —sin contraseñas guardadas en GitHub— y una identidad de solo lectura. La cadena de conexión y la clave JWT viven en **Key Vault**, y la API las lee al arrancar con su **identidad administrada**: en su configuración solo hay referencias, no contraseñas. La **misma imagen** corre también en **AWS** (ECS Express Mode sobre Fargate + RDS SQL Server), con su propio **Terraform** y estado remoto en S3: todo el entorno se levanta con un script (`up.ps1`), que lee de Azure la imagen `sha-<commit>` exacta que está en producción —nunca `:latest`— y la clave JWT, y se apaga con otro (`down.ps1`), unos 20 minutos cada uno, así que solo cuesta mientras se usa. La contraseña de la base de datos y la clave JWT son valores *write-only* en **SSM Parameter Store** y nunca llegan al estado, Trivy escanea el Terraform de AWS igual que el de Azure y se prueba en cada push (`terraform test` con un proveedor simulado y **Pester** en Windows PowerShell 5.1), y el diseño —un Terraform por nube con un contrato común— está recogido en un **ADR**. En producción, **Application Insights** (OpenTelemetry) recoge peticiones, errores y logs, y Azure Monitor avisa por email ante errores 5xx o picos de 401/403. La misma imagen también está preparada para **Kubernetes** con un **chart de Helm** propio: 2 réplicas con actualizaciones sin corte, sondas de arranque, vida y disponibilidad, un *initContainer* que espera a la base de datos, SQL Server en un StatefulSet con volumen persistente e Ingress con Traefik; el pipeline valida el chart en cada pull request. **[Ver la API en Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)** — con SQL serverless, la primera petición tras un rato de inactividad tarda unos segundos.
-
-[![CI FinanceTracker](https://img.shields.io/github/actions/workflow/status/antonicr1986/FinanceTracker/ci.yml?style=for-the-badge&label=CI%2FCD&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/FinanceTracker/actions)
-
 ### Otros proyectos
 
-- 🧰 **ai-project-kit** *(repo privado · [descárgalo desde mi CV](https://antonio-cv-five.vercel.app/?lang=es))* — Kit que prepara cualquier proyecto para desarrollar con asistentes de IA de forma segura: reglas para la IA (`CLAUDE.md`, `AGENTS.md`), un flujo de skills —`/backlog` → `/story` → `/pair` → `/code-review`: historias cortas, tests primero y la IA nunca hace commit ni push— y plantillas de CI para GitHub Actions y Azure DevOps con Gitleaks, acciones fijadas por SHA, permisos mínimos y herramientas con el SHA-256 verificado. Un instalador en PowerShell (doble clic o botón derecho del Explorador) detecta si el proyecto es nuevo o existente y lo actualiza sin pisar lo personalizado. Releases automáticas con Conventional Commits, 8 ADR y 113 pruebas con Pester, incluidas pruebas e2e de la plantilla. FinanceTracker se desarrolla con él.
+- 🧰 **ai-project-kit** *(repo privado · [descárgalo desde mi CV](https://antonio-cv-five.vercel.app/?lang=es))* — Kit para desarrollar cualquier proyecto con asistentes de IA de forma segura.
+  - Reglas para la IA (`CLAUDE.md`, `AGENTS.md`) y skills `/backlog` → `/story` → `/pair` → `/code-review`: tests primero y la IA nunca hace commit
+  - Plantillas de CI para GitHub Actions y Azure DevOps con Gitleaks y permisos mínimos
+  - Instalador en PowerShell, releases automáticas, 8 ADR y 113 pruebas con Pester
 
 ![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=gnometerminal&logoColor=white)
 ![Claude Code](https://img.shields.io/badge/Claude_Code-D97757?style=for-the-badge&logo=claude&logoColor=white)
 
-- 📄 **antonio-cv** *(repo privado · [ábrelo](https://antonio-cv-five.vercel.app/?lang=es))* — Mi CV interactivo en Next.js 16, React 19, TypeScript y Tailwind CSS 4: bilingüe, con tema claro/oscuro e imprimible en PDF. Incluye un **chat con IA** (OpenAI) que responde preguntas sobre mi perfil, protegido como cualquier API pública: límites por ráfaga, por hora y por día, solo JSON del mismo origen y enlaces restringidos a URLs conocidas. El pipeline escanea el historial con gitleaks y pasa lint, `npm audit`, tests y build; solo con todo en verde despliega en Vercel, y después lanza un smoke test y un escaneo de OWASP ZAP sobre la web publicada. lychee comprueba todos los enlaces y las acciones están fijadas por SHA.
+- 📄 **antonio-cv** *(repo privado · [ábrelo](https://antonio-cv-five.vercel.app/?lang=es))* — Mi CV interactivo en Next.js 16 y React 19: bilingüe, claro/oscuro e imprimible en PDF.
+  - Chat con IA (OpenAI) protegido como una API pública: límites de uso y solo peticiones del mismo origen
+  - Solo despliega en Vercel con gitleaks, lint, `npm audit`, tests y build en verde; después, smoke test y OWASP ZAP
 
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
 ![OpenAI](https://img.shields.io/badge/Chat_con_IA-412991?style=for-the-badge&logo=openai&logoColor=white)
 
-- 🔧 **Jenkins CI para .NET** *(repos privados)* — Jenkins montado con **Docker Compose** como en una empresa: un *controller* que solo coordina (0 ejecutores) y un **agente Linux con el SDK de .NET 10** conectado por WebSocket. Un **Jenkinsfile declarativo** versionado en Git restaura, compila, ejecuta los tests con resultados **JUnit** publicados y archiva los artefactos con huella. Si fallan tests, el build queda **UNSTABLE** y no se publica nada. Incluye parámetros de compilación, credenciales enmascaradas en los logs, clonado del repo privado con un token de solo lectura, polling del SCM, `timeout` y rotación de builds. La infraestructura también está en Git: se reproduce en otro equipo con un `docker compose up`. Las versiones están fijadas y el SDK de .NET se copia de la imagen oficial con un build multi-stage. Su propio CI pasa **Gitleaks**, **Hadolint** y **Trivy** con permisos mínimos y acciones fijadas por SHA: el primer escaneo encontró 20 vulnerabilidades altas, todas resueltas.
+- 🔧 **Jenkins CI para .NET** *(repos privados)* — Jenkins en Docker Compose, montado como en una empresa.
+  - Controller con 0 ejecutores y un agente Linux con el SDK de .NET 10
+  - Jenkinsfile declarativo: build, tests JUnit y artefactos; si fallan tests, no se publica nada
+  - CI propio con Gitleaks, Hadolint y Trivy: 20 vulnerabilidades altas encontradas y resueltas
 
 ![Jenkins](https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker_Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-- 🔗 [BlocDeNotas](https://github.com/antonicr1986/BlocDeNotas) — Aplicación de escritorio en Windows Forms (.NET Framework 4.7.2). Pipeline sobre runner de Windows con MSBuild y NuGet, y **publicación automática de Releases** al etiquetar una versión: empaqueta el ejecutable, genera el changelog y sella el número de versión en el propio binario.
+- 🔗 [BlocDeNotas](https://github.com/antonicr1986/BlocDeNotas) — App de Windows Forms (.NET Framework 4.7.2): runner de Windows con MSBuild y NuGet, y Release con changelog y binario versionado en cada etiqueta.
 
 [![CI BlocDeNotas](https://img.shields.io/github/actions/workflow/status/antonicr1986/BlocDeNotas/ci.yml?style=for-the-badge&label=CI&logo=githubactions&logoColor=white)](https://github.com/antonicr1986/BlocDeNotas/actions)
 [![Release](https://img.shields.io/github/v/release/antonicr1986/BlocDeNotas?style=for-the-badge&logo=github&logoColor=white)](https://github.com/antonicr1986/BlocDeNotas/releases/latest)
 
-> Además de GitHub Actions y Azure DevOps, el mismo ciclo de build, test y artefactos montado sobre Jenkins con agentes en contenedores.
->
-> Cuatro modelos de entrega distintos: uno publica una imagen de contenedor y despliega la API sobre Azure App Service; otro publica un ejecutable versionado listo para descargar; otro publica un sitio web, y solo si los controles previos pasan; y el último deja un APK instalable en cada ejecución. El pipeline se adapta a lo que hay que entregar.
+> **Cuatro modelos de entrega, cada uno donde encaja:** imagen de contenedor (API), web con despliegue controlado (web), ejecutable versionado (escritorio) y APK (Android).
 
 ## 🔒 Seguridad en mis repositorios (DevSecOps)
 
@@ -360,6 +419,9 @@ flowchart LR
 | 📬 Reporte de vulnerabilidades | `SECURITY.md` · *private vulnerability reporting* | En mis repos públicos |
 | 🔄 Mantenerse al día | **Dependabot** | Una pull request al mes |
 
+<details>
+<summary><b>Cómo lo aplico: secretos, dependencias y del pipeline a producción</b></summary>
+
 ### 🔑 Secretos
 
 - **Reglas propias.** Extienden las de gitleaks: las de serie detectan claves de proveedores conocidos, pero no una contraseña dentro de una cadena de conexión, que es la forma que toma una fuga en un proyecto .NET.
@@ -386,6 +448,8 @@ flowchart LR
 - **Imagen firmada y con su SBOM.** Tras publicarla, Syft genera el SBOM de la imagen y cosign firma la imagen y le adjunta el SBOM como attestation firmada. La firma es *keyless*, con la identidad OIDC del workflow: no hay clave que guardar ni que se pueda filtrar, y `cosign verify` demuestra que la imagen la construyó mi pipeline en `master`.
 - **Rama principal protegida y un canal privado para fallos.** Rulesets en la rama principal de mis repos públicos y un `SECURITY.md` con el reporte privado de vulnerabilidades activado, para que un fallo se pueda avisar sin hacerlo público.
 - **Pipelines acotados.** Un solo despliegue a producción a la vez (`concurrency`) y un tiempo máximo por job, para que uno colgado no consuma minutos durante horas.
+
+</details>
 
 ---
 

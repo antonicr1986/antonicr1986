@@ -90,7 +90,7 @@ flowchart LR
 - 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — REST API in .NET 8 (JWT, sign-in with Google, MFA) used by all three clients.
   - **CI/CD**: Docker image per commit in GHCR, signed with cosign + SBOM, deployed to Azure App Service without rebuilding
   - **Security**: deploys only if tests, secrets, Trivy and OWASP ZAP pass; secrets in Key Vault via managed identity
-  - **Sign-in**: optional TOTP MFA (encrypted secrets, trusted devices for 30 days), rate limiting, account lockout and breached-password check (HIBP)
+  - **Sign-in**: optional TOTP MFA (encrypted secrets, trusted devices for 30 days), sign out of all devices (JWT revocation), rate limiting, account lockout and breached-password check (HIBP)
   - **IaC and multicloud**: Terraform on Azure and AWS (ECS + RDS on demand), `plan` on every PR via OIDC
   - **Kubernetes and observability**: Helm chart validated in CI · Application Insights with alerts
 
@@ -182,7 +182,7 @@ flowchart LR
 | 🏗️ Infrastructure as code | **Trivy** (`trivy config`) | Before deploying |
 | 🌐 Running application (DAST) | **OWASP ZAP**: active and authenticated in a throwaway environment · passive in production | Before deploying the API (blocks) and after every deployment |
 | 🗝️ Production secrets | **Azure Key Vault** · managed identity · **AWS SSM** (write-only) | Always: the API reads them at startup |
-| 🔑 User sign-in | **TOTP MFA** · rate limiting · lockout · **Have I Been Pwned** | On every sign-in in my FinanceTracker apps |
+| 🔑 User sign-in | **TOTP MFA** · session revocation · rate limiting · lockout · **Have I Been Pwned** | On every sign-in in my FinanceTracker apps |
 | 👤 Cloud access | **AWS IAM Identity Center** (SSO) · MFA | When running Terraform: 1-hour credentials, no long-lived access keys |
 | 🔐 Least privilege | read-only `GITHUB_TOKEN` · **OIDC** | In every workflow |
 | 🌿 Main branch protection | GitHub **rulesets** | On the main branch of my public repos |
@@ -315,7 +315,7 @@ flowchart LR
 - 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8 (JWT, inicio de sesión con Google, MFA) que consumen los tres clientes.
   - **CI/CD**: imagen Docker por commit en GHCR, firmada con cosign + SBOM, desplegada en Azure App Service sin recompilar
   - **Seguridad**: solo despliega si pasan tests, secretos, Trivy y OWASP ZAP; secretos en Key Vault con identidad administrada
-  - **Inicio de sesión**: MFA opcional con TOTP (secretos cifrados, dispositivos de confianza 30 días), límite de intentos, bloqueo de cuenta y contraseñas filtradas rechazadas (HIBP)
+  - **Inicio de sesión**: MFA opcional con TOTP (secretos cifrados, dispositivos de confianza 30 días), cierre de sesión en todos los dispositivos (revocación de JWT), límite de intentos, bloqueo de cuenta y contraseñas filtradas rechazadas (HIBP)
   - **IaC y multicloud**: Terraform en Azure y AWS (ECS + RDS bajo demanda), `plan` en cada PR con OIDC
   - **Kubernetes y observabilidad**: chart de Helm validado en CI · Application Insights con alertas
 
@@ -407,7 +407,7 @@ flowchart LR
 | 🏗️ Infraestructura como código | **Trivy** (`trivy config`) | Antes de desplegar |
 | 🌐 Aplicación en marcha (DAST) | **OWASP ZAP**: activo y autenticado en un entorno desechable · pasivo en producción | Antes de desplegar la API (bloquea) y después de cada despliegue |
 | 🗝️ Secretos en producción | **Azure Key Vault** · identidad administrada · **AWS SSM** (write-only) | Siempre: la API los lee al arrancar |
-| 🔑 Inicio de sesión de usuarios | **MFA con TOTP** · límite de intentos · bloqueo · **Have I Been Pwned** | En cada inicio de sesión de mis apps FinanceTracker |
+| 🔑 Inicio de sesión de usuarios | **MFA con TOTP** · revocación de sesiones · límite de intentos · bloqueo · **Have I Been Pwned** | En cada inicio de sesión de mis apps FinanceTracker |
 | 👤 Acceso a la nube | **AWS IAM Identity Center** (SSO) · MFA | Al lanzar Terraform: credenciales de 1 hora, sin claves de acceso fijas |
 | 🔐 Mínimo privilegio | `GITHUB_TOKEN` de solo lectura · **OIDC** | En todos los workflows |
 | 🌿 Protección de la rama principal | **Rulesets** de GitHub | En la rama principal de mis repos públicos |

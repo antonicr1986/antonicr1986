@@ -90,7 +90,7 @@ flowchart LR
 - 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — REST API in .NET 8 (JWT, sign-in with Google, MFA) used by all three clients.
   - **CI/CD**: Docker image per commit in GHCR, signed with cosign + SBOM, deployed to Azure App Service without rebuilding
   - **Security**: deploys only if tests, secrets, Trivy and OWASP ZAP pass; secrets in Key Vault via managed identity
-  - **Sign-in**: optional TOTP MFA (encrypted secrets, trusted devices for 30 days), sign out of all devices (JWT revocation), password change that closes other sessions, rate limiting, account lockout and breached-password check (HIBP)
+  - **Sign-in**: email verification with a one-time code (Azure Communication Services), optional TOTP MFA (encrypted secrets, trusted devices for 30 days), sign out of all devices (JWT revocation), password change that closes other sessions, rate limiting, account lockout and breached-password check (HIBP)
   - **IaC and multicloud**: Terraform on Azure and AWS (ECS + RDS on demand), `plan` on every PR via OIDC
   - **Kubernetes and observability**: Helm chart validated in CI · Application Insights with alerts
 
@@ -315,7 +315,7 @@ flowchart LR
 - 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8 (JWT, inicio de sesión con Google, MFA) que consumen los tres clientes.
   - **CI/CD**: imagen Docker por commit en GHCR, firmada con cosign + SBOM, desplegada en Azure App Service sin recompilar
   - **Seguridad**: solo despliega si pasan tests, secretos, Trivy y OWASP ZAP; secretos en Key Vault con identidad administrada
-  - **Inicio de sesión**: MFA opcional con TOTP (secretos cifrados, dispositivos de confianza 30 días), cierre de sesión en todos los dispositivos (revocación de JWT), cambio de contraseña que cierra las demás sesiones, límite de intentos, bloqueo de cuenta y contraseñas filtradas rechazadas (HIBP)
+  - **Inicio de sesión**: verificación del correo con código de un solo uso (Azure Communication Services), MFA opcional con TOTP (secretos cifrados, dispositivos de confianza 30 días), cierre de sesión en todos los dispositivos (revocación de JWT), cambio de contraseña que cierra las demás sesiones, límite de intentos, bloqueo de cuenta y contraseñas filtradas rechazadas (HIBP)
   - **IaC y multicloud**: Terraform en Azure y AWS (ECS + RDS bajo demanda), `plan` en cada PR con OIDC
   - **Kubernetes y observabilidad**: chart de Helm validado en CI · Application Insights con alertas
 

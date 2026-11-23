@@ -122,7 +122,7 @@ flowchart LR
 - 🔗 [financetracker-desktop](https://github.com/antonicr1986/financetracker-desktop) — Windows client in WPF and .NET 8 with MVVM.
   - Sign-in with Google, session encrypted with DPAPI and 150+ tests with no UI or network
   - Windows runner: self-contained Release (`.zip` / `.exe`) on every tag
-  - MSIX package published on the Microsoft Store
+  - MSIX package shipped to the Microsoft Store from CI on every tag (`msstore` CLI, release notes in EN/ES)
 
   **[Available on the Microsoft Store](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=en-us)**
 
@@ -347,7 +347,7 @@ flowchart LR
 - 🔗 [financetracker-desktop](https://github.com/antonicr1986/financetracker-desktop) — Cliente de Windows en WPF y .NET 8 con MVVM.
   - Inicio de sesión con Google, sesión cifrada con DPAPI y más de 150 pruebas sin ventanas ni red
   - Runner de Windows: Release autocontenida (`.zip` / `.exe`) en cada versión
-  - Paquete MSIX publicado en la Microsoft Store
+  - Paquete MSIX publicado en Microsoft Store desde el CI en cada versión (CLI `msstore`, novedades en EN/ES)
 
   **[Disponible en Microsoft Store](https://apps.microsoft.com/detail/9NT27R8DZ2DQ?hl=es-es)**
 

@@ -88,11 +88,11 @@ flowchart LR
 ```
 
 - 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — REST API in .NET 8 (JWT, sign-in with Google, MFA) used by all three clients.
-  - **CI/CD**: Docker image per commit in GHCR, signed with cosign + SBOM, deployed to Azure App Service without rebuilding · minimum client version per platform (HTTP 426), so outdated apps ask to update
+  - **CI/CD**: Docker image per commit in GHCR, signed with cosign + SBOM, deployed to Azure App Service by digest without rebuilding · minimum client version per platform (HTTP 426), so outdated apps ask to update
   - **Security**: deploys only if tests, secrets, Trivy and OWASP ZAP pass; secrets in Key Vault via managed identity; passwordless deploy to Azure (OIDC, identity scoped to the Web App)
   - **Sign-in**: email verification with a one-time code (Azure Communication Services), optional TOTP MFA (encrypted secrets, trusted devices for 30 days), sign out of all devices (JWT revocation), password change and email-based password reset that close other sessions, rate limiting, account lockout and breached-password check (HIBP)
   - **IaC and multicloud**: Terraform on Azure and AWS (ECS + RDS on demand), `plan` on every PR via OIDC
-  - **Kubernetes and observability**: Helm chart validated in CI · Application Insights with alerts
+  - **Kubernetes and observability**: Helm chart validated in CI · Application Insights with alerts · SQL auditing in Log Analytics
 
   **[Browse the API in Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)**
 
@@ -313,11 +313,11 @@ flowchart LR
 ```
 
 - 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8 (JWT, inicio de sesión con Google, MFA) que consumen los tres clientes.
-  - **CI/CD**: imagen Docker por commit en GHCR, firmada con cosign + SBOM, desplegada en Azure App Service sin recompilar · versión mínima de cliente por plataforma (HTTP 426), para que las apps antiguas pidan actualizar
+  - **CI/CD**: imagen Docker por commit en GHCR, firmada con cosign + SBOM, desplegada en Azure App Service por digest sin recompilar · versión mínima de cliente por plataforma (HTTP 426), para que las apps antiguas pidan actualizar
   - **Seguridad**: solo despliega si pasan tests, secretos, Trivy y OWASP ZAP; secretos en Key Vault con identidad administrada; despliegue en Azure sin contraseñas (OIDC, identidad limitada a la Web App)
   - **Inicio de sesión**: verificación del correo con código de un solo uso (Azure Communication Services), MFA opcional con TOTP (secretos cifrados, dispositivos de confianza 30 días), cierre de sesión en todos los dispositivos (revocación de JWT), cambio y recuperación de contraseña por correo que cierran las demás sesiones, límite de intentos, bloqueo de cuenta y contraseñas filtradas rechazadas (HIBP)
   - **IaC y multicloud**: Terraform en Azure y AWS (ECS + RDS bajo demanda), `plan` en cada PR con OIDC
-  - **Kubernetes y observabilidad**: chart de Helm validado en CI · Application Insights con alertas
+  - **Kubernetes y observabilidad**: chart de Helm validado en CI · Application Insights con alertas · auditoría de SQL en Log Analytics
 
   **[Ver la API en Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)**
 

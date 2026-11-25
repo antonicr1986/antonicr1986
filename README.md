@@ -92,7 +92,7 @@ flowchart LR
   - **Security**: deploys only if tests, secrets, Trivy and OWASP ZAP pass; secrets in Key Vault via managed identity; passwordless deploy to Azure (OIDC, identity scoped to the Web App)
   - **Sign-in**: email verification with a one-time code (Azure Communication Services), optional TOTP MFA (encrypted secrets, trusted devices for 30 days), sign out of all devices (JWT revocation), password change and email-based password reset that close other sessions, rate limiting, account lockout and breached-password check (HIBP)
   - **IaC and multicloud**: Terraform on Azure and AWS (ECS + RDS on demand), `plan` on every PR via OIDC
-  - **Kubernetes and observability**: Helm chart validated in CI · Application Insights with alerts · SQL auditing in Log Analytics
+  - **Kubernetes and observability**: Helm chart validated and scanned with Trivy in CI (non-root pods, read-only filesystem, HPA, PodDisruptionBudget) · Application Insights with alerts · SQL auditing in Log Analytics
 
   **[Browse the API in Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)**
 
@@ -317,7 +317,7 @@ flowchart LR
   - **Seguridad**: solo despliega si pasan tests, secretos, Trivy y OWASP ZAP; secretos en Key Vault con identidad administrada; despliegue en Azure sin contraseñas (OIDC, identidad limitada a la Web App)
   - **Inicio de sesión**: verificación del correo con código de un solo uso (Azure Communication Services), MFA opcional con TOTP (secretos cifrados, dispositivos de confianza 30 días), cierre de sesión en todos los dispositivos (revocación de JWT), cambio y recuperación de contraseña por correo que cierran las demás sesiones, límite de intentos, bloqueo de cuenta y contraseñas filtradas rechazadas (HIBP)
   - **IaC y multicloud**: Terraform en Azure y AWS (ECS + RDS bajo demanda), `plan` en cada PR con OIDC
-  - **Kubernetes y observabilidad**: chart de Helm validado en CI · Application Insights con alertas · auditoría de SQL en Log Analytics
+  - **Kubernetes y observabilidad**: chart de Helm validado y escaneado con Trivy en CI (pods sin root, disco de solo lectura, HPA, PodDisruptionBudget) · Application Insights con alertas · auditoría de SQL en Log Analytics
 
   **[Ver la API en Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)**
 

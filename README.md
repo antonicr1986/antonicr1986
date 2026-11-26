@@ -23,7 +23,7 @@
 - Terraform — Azure and AWS, remote state and a `plan` on every PR
 - Azure — App Service, Azure SQL and Key Vault with managed identity
 - AWS — ECS Express Mode + RDS, brought up on demand (multicloud)
-- Kubernetes and Helm — my own chart, validated in CI
+- Kubernetes and Helm — my own chart, validated in CI and deployed with GitOps (Argo CD)
 - Observability — Application Insights (OpenTelemetry) and Azure Monitor alerts
 
 ## 💻 Development
@@ -84,7 +84,7 @@ flowchart LR
     WEB -. CI/CD .-> VER[Vercel]
     AND -. CI .-> APK[Downloadable APK]
     DESK -. CI/CD .-> REL[GitHub Release · .exe/.zip + Microsoft Store]
-    GHCR -. Helm .-> K8S[Kubernetes · Helm chart validated in CI]
+    GHCR -. Helm .-> K8S[Kubernetes · Helm chart deployed by Argo CD]
 ```
 
 - 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — REST API in .NET 8 (JWT, sign-in with Google, MFA) used by all three clients.
@@ -92,7 +92,7 @@ flowchart LR
   - **Security**: deploys only if tests, secrets, Trivy and OWASP ZAP pass; secrets in Key Vault via managed identity; passwordless deploy to Azure (OIDC, identity scoped to the Web App) and passwordless SQL access (managed identity)
   - **Sign-in**: email verification with a one-time code (Azure Communication Services), optional TOTP MFA (encrypted secrets, trusted devices for 30 days), sign out of all devices (JWT revocation), password change and email-based password reset that close other sessions, rate limiting, account lockout and breached-password check (HIBP)
   - **IaC and multicloud**: Terraform on Azure and AWS (ECS + RDS on demand), `plan` on every PR via OIDC
-  - **Kubernetes and observability**: Helm chart validated and scanned with Trivy in CI (non-root pods, read-only filesystem, HPA, PodDisruptionBudget) · Application Insights with alerts · SQL auditing in Log Analytics
+  - **Kubernetes and observability**: Helm chart validated and scanned with Trivy in CI (non-root pods, read-only filesystem, HPA, PodDisruptionBudget) · GitOps with Argo CD (auto-sync and self-heal) · Application Insights with alerts · SQL auditing in Log Analytics
 
   **[Browse the API in Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)**
 
@@ -248,7 +248,7 @@ Desarrollador .NET con experiencia en DevOps y DevSecOps. En el trabajo llevo el
 - Terraform — Azure y AWS, estado remoto y `plan` en cada PR
 - Azure — App Service, Azure SQL y Key Vault con identidad administrada
 - AWS — ECS Express Mode + RDS, levantado bajo demanda (multicloud)
-- Kubernetes y Helm — chart propio validado en CI
+- Kubernetes y Helm — chart propio validado en CI y desplegado con GitOps (Argo CD)
 - Observabilidad — Application Insights (OpenTelemetry) y alertas en Azure Monitor
 
 ## 💻 Desarrollo
@@ -309,7 +309,7 @@ flowchart LR
     WEB -. CI/CD .-> VER[Vercel]
     AND -. CI .-> APK[APK descargable]
     DESK -. CI/CD .-> REL[GitHub Release · .exe/.zip + Microsoft Store]
-    GHCR -. Helm .-> K8S[Kubernetes · chart de Helm validado en CI]
+    GHCR -. Helm .-> K8S[Kubernetes · chart de Helm desplegado con Argo CD]
 ```
 
 - 🔗 [FinanceTracker](https://github.com/antonicr1986/FinanceTracker) — API REST en .NET 8 (JWT, inicio de sesión con Google, MFA) que consumen los tres clientes.
@@ -317,7 +317,7 @@ flowchart LR
   - **Seguridad**: solo despliega si pasan tests, secretos, Trivy y OWASP ZAP; secretos en Key Vault con identidad administrada; despliegue en Azure sin contraseñas (OIDC, identidad limitada a la Web App) y acceso a SQL sin contraseña (identidad administrada)
   - **Inicio de sesión**: verificación del correo con código de un solo uso (Azure Communication Services), MFA opcional con TOTP (secretos cifrados, dispositivos de confianza 30 días), cierre de sesión en todos los dispositivos (revocación de JWT), cambio y recuperación de contraseña por correo que cierran las demás sesiones, límite de intentos, bloqueo de cuenta y contraseñas filtradas rechazadas (HIBP)
   - **IaC y multicloud**: Terraform en Azure y AWS (ECS + RDS bajo demanda), `plan` en cada PR con OIDC
-  - **Kubernetes y observabilidad**: chart de Helm validado y escaneado con Trivy en CI (pods sin root, disco de solo lectura, HPA, PodDisruptionBudget) · Application Insights con alertas · auditoría de SQL en Log Analytics
+  - **Kubernetes y observabilidad**: chart de Helm validado y escaneado con Trivy en CI (pods sin root, disco de solo lectura, HPA, PodDisruptionBudget) · GitOps con Argo CD (sync automático y self-heal) · Application Insights con alertas · auditoría de SQL en Log Analytics
 
   **[Ver la API en Swagger](https://financetracker-api-cpctbta0gddddge5.belgiumcentral-01.azurewebsites.net/swagger)**
 
